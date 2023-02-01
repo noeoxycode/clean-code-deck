@@ -1,0 +1,7 @@
+.DS_STORE
+*/.DS_STORE
+.idea
+target
+*/target
+*/*/target
+clean-code-deck.iml
