@@ -5,7 +5,6 @@ import fr.cleancode.org.domain.functional.model.hero.Speciality;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -24,7 +23,6 @@ public class HeroEntity {
     @Id
     @Include
     private UUID heroId;
-    private String availablePoints;
     private String name;
     private int healthPoints;
     private int currentExperiences;
