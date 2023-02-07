@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class DomainConfiguration {
 
     @Bean
-    public HeroCreatorApi drivingLicenceCreatorService(HeroPersistenceSpi spi) {
+    public HeroCreatorApi heroCreatorService(HeroPersistenceSpi spi) {
         return new HeroCreatorService(spi);
     }
 }
