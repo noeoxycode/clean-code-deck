@@ -11,24 +11,24 @@ import static fr.cleancode.org.bootstrap.PackagesAndLayers.BOOTSTRAP_PACKAGE;
 import static fr.cleancode.org.bootstrap.PackagesAndLayers.CLIENT_PACKAGE;
 
 @AnalyzeClasses(
-    packages = "fr.cleancode.org.client",
-    cacheMode = FOREVER,
-    importOptions = {DoNotIncludeTests.class})
+        packages = "fr.cleancode.org.client",
+        cacheMode = FOREVER,
+        importOptions = {DoNotIncludeTests.class})
 public class ClientDevelopmentRulesTest {
 
-  @ArchTest
-  public static final ArchRule CLIENT_DEVELOPMENT_RULE =
-      classes()
-          .that()
-          .resideInAPackage(CLIENT_PACKAGE)
-          .should()
-          .onlyHaveDependentClassesThat()
-          .resideInAnyPackage(CLIENT_PACKAGE, BOOTSTRAP_PACKAGE)
-          .andShould()
-          .onlyBeAccessed()
-          .byClassesThat()
-          .resideInAnyPackage(BOOTSTRAP_PACKAGE, CLIENT_PACKAGE)
-          .andShould()
-          .onlyHaveDependentClassesThat()
-          .resideInAnyPackage(BOOTSTRAP_PACKAGE, CLIENT_PACKAGE);
+    @ArchTest
+    public static final ArchRule CLIENT_DEVELOPMENT_RULE =
+            classes()
+                    .that()
+                    .resideInAPackage(CLIENT_PACKAGE)
+                    .should()
+                    .onlyHaveDependentClassesThat()
+                    .resideInAnyPackage(CLIENT_PACKAGE, BOOTSTRAP_PACKAGE)
+                    .andShould()
+                    .onlyBeAccessed()
+                    .byClassesThat()
+                    .resideInAnyPackage(BOOTSTRAP_PACKAGE, CLIENT_PACKAGE)
+                    .andShould()
+                    .onlyHaveDependentClassesThat()
+                    .resideInAnyPackage(BOOTSTRAP_PACKAGE, CLIENT_PACKAGE);
 }

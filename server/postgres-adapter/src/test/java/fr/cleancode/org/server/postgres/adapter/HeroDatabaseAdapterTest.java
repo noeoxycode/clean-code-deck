@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 class HeroDatabaseAdapterTest {
 
     @InjectMocks
-    private DrivingLicenceDatabaseAdapter adapter;
+    private HeroDatabaseAdapter adapter;
 
     @Mock
     private HeroRepository repository;

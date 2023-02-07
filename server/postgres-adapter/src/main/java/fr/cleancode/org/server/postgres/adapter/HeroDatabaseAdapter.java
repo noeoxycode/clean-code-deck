@@ -15,7 +15,7 @@ import static io.vavr.API.Try;
 
 @Service
 @RequiredArgsConstructor
-public class DrivingLicenceDatabaseAdapter implements HeroPersistenceSpi {
+public class HeroDatabaseAdapter implements HeroPersistenceSpi {
 
     private final HeroRepository heroRepository;
 

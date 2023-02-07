@@ -10,8 +10,7 @@ import static io.vavr.API.Valid;
 public interface HeroValidator {
 
     static Validation<ApplicationError, Hero> validate(Hero hero) {
-        return hero.getHeroId() != null
-                && hero.getName() != null
+        return hero.getName() != null
                 && hero.getSpeciality() != null
                 && hero.getRarity() != null
                 ? Valid(hero)

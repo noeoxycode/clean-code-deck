@@ -10,20 +10,20 @@ import static com.tngtech.archunit.junit.CacheMode.FOREVER;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 @AnalyzeClasses(
-    packages = "fr.cleancode.org.server",
-    cacheMode = FOREVER,
-    importOptions = {DoNotIncludeTests.class})
+        packages = "fr.cleancode.org.server",
+        cacheMode = FOREVER,
+        importOptions = {DoNotIncludeTests.class})
 public class ServerDevelopmentRulesTest {
 
-  @ArchTest
-  public static final ArchRule SERVER_DEVELOPMENT_RULE =
-      classes()
-          .that()
-          .resideInAPackage(PackagesAndLayers.SERVER_PACKAGE)
-          .should()
-          .onlyHaveDependentClassesThat()
-          .resideInAnyPackage(PackagesAndLayers.SERVER_PACKAGE, PackagesAndLayers.BOOTSTRAP_PACKAGE)
-          .andShould()
-          .onlyBeAccessed()
-          .byAnyPackage(PackagesAndLayers.BOOTSTRAP_PACKAGE, PackagesAndLayers.SERVER_PACKAGE);
+    @ArchTest
+    public static final ArchRule SERVER_DEVELOPMENT_RULE =
+            classes()
+                    .that()
+                    .resideInAPackage(PackagesAndLayers.SERVER_PACKAGE)
+                    .should()
+                    .onlyHaveDependentClassesThat()
+                    .resideInAnyPackage(PackagesAndLayers.SERVER_PACKAGE, PackagesAndLayers.BOOTSTRAP_PACKAGE)
+                    .andShould()
+                    .onlyBeAccessed()
+                    .byAnyPackage(PackagesAndLayers.BOOTSTRAP_PACKAGE, PackagesAndLayers.SERVER_PACKAGE);
 }
