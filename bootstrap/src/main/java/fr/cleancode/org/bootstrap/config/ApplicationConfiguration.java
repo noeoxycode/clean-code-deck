@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Import;
 @Import({DomainConfiguration.class})
 public class ApplicationConfiguration {
 
-  @Bean
-  public ObjectMapper objectMapper() {
-    return new ObjectMapper().registerModule(new VavrModule());
-  }
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().registerModule(new VavrModule());
+    }
 }
