@@ -20,11 +20,10 @@ public class HeroResource {
     private final HeroCreatorApi heroCreatorApi;
 
     @PostMapping
-    public ResponseEntity<Object> createHero(@RequestBody HeroCreationRequest dto) {
+    public ResponseEntity<Object> createHero(@RequestBody HeroCreationRequest request) {
         return heroCreatorApi
-                .create(heroCreationToDomain(dto))
+                .create(heroCreationToDomain(request))
                 .map(HeroDtoMapper::toDto)
                 .fold(ResponseEntity.badRequest()::body, ResponseEntity::ok);
     }
-
 }

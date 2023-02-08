@@ -48,7 +48,10 @@ class HeroCreatorServiceTest {
 
     @Test
     void should_not_create_hero_if_is_null() {
-        val given = Hero.builder().build();
+        val given = Hero.builder()
+                .currentExperiences(0)
+                .speciality(TANK)
+                .build();
         val actual = service.create(given);
         assertThat(actual).containsLeftInstanceOf(ApplicationError.class);
         verifyNoInteractions(spi);

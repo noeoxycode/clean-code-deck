@@ -13,10 +13,9 @@ public interface HeroValidator {
         return hero.getName() != null
                 && hero.getSpeciality() != null
                 && hero.getRarity() != null
+                && hero.getLevel() >= 1
+                && hero.getLevel() < 100
                 ? Valid(hero)
-                : Invalid(new ApplicationError("All field shouldn't be null", null, hero, null));
+                : Invalid(new ApplicationError("Invalid field with the hero {}", null, hero, null));
     }
-
-    // For now this class just validate if the hero is not null
-    // In a second time i will increase this class to add more verifications
 }
