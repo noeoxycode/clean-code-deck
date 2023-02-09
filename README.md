@@ -33,7 +33,7 @@ docker-compose up -d
 ### After (Stop)
 * Stop the *Spring Application* on IntelliJ.
 * ```docker-compose stop```
-> Be sure that you don't use ```docker-compose down``` to not clear the volume of the databse and clear the data inside.
+> Be sure that you don't use ```docker-compose down``` to not clear the volume of the database and clear the data inside.
 ---
 ## Contributing
 * MARLEIX Noé -> [noeoxycode](https://github.com/noeoxycode)
