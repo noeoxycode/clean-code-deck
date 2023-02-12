@@ -19,12 +19,8 @@ public class HeroFinderService implements HeroFinderApi {
 
     private final HeroPersistenceSpi spi;
 
-    public Either<ApplicationError, Hero> findHeroById(UUID heroId){
-        return (Either<ApplicationError, Hero>) spi.findById(heroId)
-                .onEmpty(() -> log.error("Unable to find driving licence with id {}", heroId))
-                .fold(
-                        () -> Left(new ApplicationError("No hero found", null, heroId, null)),
-                        drivingLicence -> HeroValidator.validate((Hero) spi.findById(heroId)));
+    public Hero findHeroById(UUID heroId){
+        return spi.findById(heroId);
     }
 
 }

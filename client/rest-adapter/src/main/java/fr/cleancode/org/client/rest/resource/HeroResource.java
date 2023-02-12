@@ -1,7 +1,9 @@
 package fr.cleancode.org.client.rest.resource;
 
 import fr.cleancode.org.client.rest.dto.HeroCreationRequest;
+import fr.cleancode.org.client.rest.dto.HeroDto;
 import fr.cleancode.org.client.rest.mapper.HeroDtoMapper;
+import fr.cleancode.org.domain.functional.model.hero.Hero;
 import fr.cleancode.org.domain.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.ports.client.HeroFinderApi;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +31,8 @@ public class HeroResource {
     }
 
     @GetMapping(path = "/{heroId}")
-    public ResponseEntity<Object> findHEro(@PathVariable ("heroId")UUID heroId) {
-        return heroFinderApi
-                .findHeroById(heroId)
-                .map(HeroDtoMapper::toDto)
-                .fold(ResponseEntity.badRequest()::body, ResponseEntity::ok);
+    public HeroDto findHeroById(@PathVariable UUID heroId) {
+       Hero heroDomain = heroFinderApi.findHeroById(heroId);
+       return HeroDtoMapper.toDto(heroDomain);
     }
 }

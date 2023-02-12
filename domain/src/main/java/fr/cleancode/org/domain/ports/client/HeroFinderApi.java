@@ -7,5 +7,5 @@ import io.vavr.control.Either;
 import java.util.UUID;
 
 public interface HeroFinderApi {
-    Either<ApplicationError, Hero> findHeroById(UUID heroId);
+    Hero findHeroById(UUID heroId);
 }
