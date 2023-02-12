@@ -20,6 +20,10 @@ public class HeroEntity {
 
     @Id
     @Include
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private UUID heroId;
     @Column(
             nullable = false,

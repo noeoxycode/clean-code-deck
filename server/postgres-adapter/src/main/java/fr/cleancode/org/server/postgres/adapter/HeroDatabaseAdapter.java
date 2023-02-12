@@ -3,6 +3,7 @@ package fr.cleancode.org.server.postgres.adapter;
 import fr.cleancode.org.domain.ApplicationError;
 import fr.cleancode.org.domain.functional.model.hero.Hero;
 import fr.cleancode.org.domain.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.server.postgres.entity.HeroEntity;
 import fr.cleancode.org.server.postgres.mapper.HeroEntityMapper;
 import fr.cleancode.org.server.postgres.repository.HeroRepository;
 import io.vavr.control.Either;
@@ -34,8 +35,9 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
 
     @Override
     @Transactional(readOnly = true)
-    public Option<Hero> findById(UUID id) {
-        return heroRepository.findHeroEntityById(id).map(HeroEntityMapper::toDomain);
+    public Hero findById(UUID heroId) {
+        HeroEntity heroEntity = heroRepository.findHeroEntityByHeroId(heroId);
+        return HeroEntityMapper.toDomain(heroEntity);
     }
 
 }
