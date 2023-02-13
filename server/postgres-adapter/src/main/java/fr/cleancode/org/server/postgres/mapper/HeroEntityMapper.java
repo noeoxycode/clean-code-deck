@@ -1,7 +1,7 @@
 package fr.cleancode.org.server.postgres.mapper;
 
-import fr.cleancode.org.domain.functional.model.hero.Hero;
-import fr.cleancode.org.server.postgres.entity.HeroEntity;
+import fr.cleancode.org.domain.hero.functional.model.Hero;
+import fr.cleancode.org.server.postgres.entities.HeroEntity;
 
 public interface HeroEntityMapper {
 

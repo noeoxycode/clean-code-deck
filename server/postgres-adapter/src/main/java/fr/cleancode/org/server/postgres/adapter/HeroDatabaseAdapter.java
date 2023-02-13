@@ -1,8 +1,8 @@
 package fr.cleancode.org.server.postgres.adapter;
 
 import fr.cleancode.org.domain.ApplicationError;
-import fr.cleancode.org.domain.functional.model.hero.Hero;
-import fr.cleancode.org.domain.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.domain.hero.functional.model.Hero;
+import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
 import fr.cleancode.org.server.postgres.mapper.HeroEntityMapper;
 import fr.cleancode.org.server.postgres.repository.HeroRepository;
 import io.vavr.control.Either;

@@ -1,7 +1,6 @@
 package fr.cleancode.org.server.postgres.repository;
 
-import fr.cleancode.org.server.postgres.entities.HeroEntity;
-import org.springframework.data.jpa.repository.EntityGraph;
+import fr.cleancode.org.server.postgres.entities.PlayerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +11,5 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
 @Repository
 @Transactional(propagation = MANDATORY)
-public interface HeroRepository extends JpaRepository<HeroEntity, UUID> {
-
-    @EntityGraph(attributePaths = "heroId")
-    HeroEntity findHeroEntityByHeroId(UUID heroId);
-
+public interface PlayerRepository extends JpaRepository<PlayerEntity, UUID> {
 }
