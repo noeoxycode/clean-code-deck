@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaAuditing
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@EntityScan(basePackages = "fr.cleancode.org.server.postgres.entity")
+@EntityScan(basePackages = "fr.cleancode.org.server.postgres.entities")
 @EnableJpaRepositories(basePackages = "fr.cleancode.org.server.postgres.repository")
 public class PostgresServerAdapterConfiguration {
 }
