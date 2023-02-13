@@ -86,4 +86,38 @@ class HeroDatabaseAdapterTest {
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
     }
+
+    @Nested
+    class FindById {
+        @Test
+        void should_find() {
+            val id = UUID.randomUUID();
+            val entity = HeroEntity
+                    .builder()
+                    .heroId(UUID.randomUUID())
+                    .build();
+            val domain = HeroEntityMapper.toDomain(entity);
+
+            when(repository.findHeroEntityByHeroId(id)).thenReturn(entity);
+            val actual = adapter.findById(id);
+
+            assertThat(actual).usingRecursiveComparison().isEqualTo(domain);
+            verifyNoMoreInteractions(repository);
+        }
+
+//        @Test
+//        void should_not_find() {
+//            val id = UUID.randomUUID();
+//            val entity = HeroEntity
+//                    .builder()
+//                    .heroId(UUID.randomUUID())
+//                    .build();
+//
+//            when(repository.findHeroEntityByHeroId(id)).thenReturn(entity);
+//            val actual = adapter.findById(id);
+//
+//            assertThat(actual).usingRecursiveComparison().isNull();
+//            verifyNoMoreInteractions(repository);
+//        }
+    }
 }

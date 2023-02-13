@@ -1,7 +1,6 @@
 package fr.cleancode.org.client.rest.resource;
 
 import fr.cleancode.org.client.rest.dto.HeroCreationRequest;
-import fr.cleancode.org.client.rest.dto.HeroDto;
 import fr.cleancode.org.client.rest.mapper.HeroDtoMapper;
 import fr.cleancode.org.domain.functional.model.hero.Hero;
 import fr.cleancode.org.domain.ports.client.HeroCreatorApi;
@@ -20,6 +19,7 @@ import static fr.cleancode.org.client.rest.mapper.HeroDtoMapper.heroCreationToDo
 public class HeroResource {
 
     private final HeroCreatorApi heroCreatorApi;
+
     private final HeroFinderApi heroFinderApi;
 
     @PostMapping
@@ -31,8 +31,7 @@ public class HeroResource {
     }
 
     @GetMapping(path = "/{heroId}")
-    public HeroDto findHeroById(@PathVariable UUID heroId) {
-       Hero heroDomain = heroFinderApi.findHeroById(heroId);
-       return HeroDtoMapper.toDto(heroDomain);
+    public Hero findHeroById(@PathVariable UUID heroId) {
+        return heroFinderApi.findHeroById(heroId);
     }
 }
