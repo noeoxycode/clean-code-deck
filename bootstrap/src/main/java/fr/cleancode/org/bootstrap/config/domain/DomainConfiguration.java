@@ -17,5 +17,7 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public HeroFinderApi heroFinderService(HeroPersistenceSpi spi) { return new HeroFinderService(spi); }
+    public HeroFinderApi heroFinderService(HeroPersistenceSpi spi) {
+        return new HeroFinderService(spi);
+    }
 }

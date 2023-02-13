@@ -1,7 +1,6 @@
 package fr.cleancode.org.server.postgres.repository;
 
 import fr.cleancode.org.server.postgres.entity.HeroEntity;
-import io.vavr.control.Option;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
