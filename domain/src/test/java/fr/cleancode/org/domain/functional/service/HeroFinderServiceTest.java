@@ -1,51 +1,49 @@
 package fr.cleancode.org.domain.functional.service;
 
-import fr.cleancode.org.domain.ApplicationError;
 import fr.cleancode.org.domain.functional.model.hero.Hero;
-import fr.cleancode.org.domain.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.ports.server.HeroPersistenceSpi;
-import lombok.val;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.util.UUID;
 
-import static io.vavr.API.None;
-import static io.vavr.API.Some;
-import static org.assertj.vavr.api.VavrAssertions.assertThat;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class HeroFinderServiceTest {
 
     @InjectMocks private HeroFinderService service;
 
     @Mock private HeroPersistenceSpi spi;
 
+
     @Test
     void should_not_find_hero() {
-        val hero = Hero.builder().build();
-        val heroId = hero.getHeroId();
+        final var id = UUID.randomUUID();
 
-        when(spi.findById(heroId)).thenReturn(None());
+        when(spi.findById(id)).thenReturn(null);
 
-        val actual = service.findHeroById(heroId);
-        assertThat(actual).containsLeftInstanceOf(ApplicationError.class);
+        final var actual = service.findHeroById(id);
+
+        assertNull(actual);
+        verify(spi).findById(id);
         verifyNoMoreInteractions(spi);
     }
 
     @Test
     void should_find_hero() {
-        val hero = Hero.builder().build();
-        val heroId = hero.getHeroId();
+        final var id = UUID.randomUUID();
+        final var hero = Hero.builder().heroId(id).build();
 
-        when(spi.findById(heroId)).thenReturn(Some(hero));
+        when(spi.findById(id)).thenReturn(hero);
 
-        val actual = service.findHeroById(heroId);
-        assertThat(actual).containsLeftInstanceOf(Hero.class);
+        final var actual = service.findHeroById(id);
+        assertEquals(actual, hero);
+        verify(spi).findById(id);
         verifyNoMoreInteractions(spi);
     }
-
-
 }
