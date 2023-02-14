@@ -1,12 +1,10 @@
-package fr.cleancode.org.domain.player.ports.server;
+package fr.cleancode.org.domain.player.ports.client;
 
 import fr.cleancode.org.domain.player.functional.model.Player;
 
 import java.util.UUID;
 
-public interface PlayerPersistenceSpi {
-
-    Player save(Player player);
+public interface PlayerFinderApi {
 
     Player findPlayerById(UUID playerId);
 }
