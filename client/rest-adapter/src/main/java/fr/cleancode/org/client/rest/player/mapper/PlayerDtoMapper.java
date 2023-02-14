@@ -8,7 +8,11 @@ public interface PlayerDtoMapper {
 
     static PlayerDto toDto(Player player) {
         return new PlayerDto(
-                player.getPseudo());
+                player.getPlayerId(),
+                player.getPseudo(),
+                player.getToken(),
+                player.getDeck()
+        );
     }
 
     static Player playerCreationToDomain(PlayerCreationRequest dto) {

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class PlayerDatabaseAdapter implements PlayerPersistenceSpi {
@@ -19,5 +21,12 @@ public class PlayerDatabaseAdapter implements PlayerPersistenceSpi {
         val entity = PlayerEntityMapper.fromDomain(player);
         playerRepository.save(entity);
         return PlayerEntityMapper.toDomain(entity);
+    }
+
+    @Override
+    public Player findPlayerById(UUID playerId) {
+        return PlayerEntityMapper
+                .toDomain(playerRepository
+                        .findPlayerEntitiesByPlayerId(playerId));
     }
 }
