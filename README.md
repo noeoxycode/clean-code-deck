@@ -24,7 +24,7 @@
 * Maven3
     * macOS : execute the command in the terminal ``brew install maven``
     * Windows : see the [tutorial](https://maven.apache.org/install.html)
-* [Docker](https://www.docker.com/) (for mongo database)
+* [Docker](https://www.docker.com/) (for Mongo Database 🥭)
 * [Postman](https://www.postman.com/) (for test REST API)
 
 ---
@@ -33,7 +33,7 @@
 
 #### Before
 
-* Create a external volume on Docker and name it "clean-code-deck".
+* Create an external volume on Docker and name it "clean-code-deck".
 
 #### Run
 
