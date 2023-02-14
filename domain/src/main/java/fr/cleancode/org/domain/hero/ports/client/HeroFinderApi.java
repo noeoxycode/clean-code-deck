@@ -2,8 +2,8 @@ package fr.cleancode.org.domain.hero.ports.client;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface HeroFinderApi {
-    Hero findHeroById(UUID heroId);
+    List<Hero> findAllHeroes();
 }
