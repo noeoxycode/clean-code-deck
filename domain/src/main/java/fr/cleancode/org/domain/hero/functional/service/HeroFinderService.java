@@ -6,7 +6,7 @@ import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.UUID;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class HeroFinderService implements HeroFinderApi {
 
     private final HeroPersistenceSpi spi;
 
-    public Hero findHeroById(UUID heroId) {
-        return spi.findById(heroId);
+    public List<Hero> findAllHeroes() {
+        return spi.findAllHeroes();
     }
 }

@@ -1,17 +1,16 @@
-version: '3.7'
+version: "3.8"
 services:
-  postgres:
-    container_name: postgres-clean-code-deck
-    image: postgres:latest
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: clean-code-deck
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
-      - "5432:5432"
+      - "27017:27017"
     volumes:
-      - clean-code-deck:/applis/docker-compose/data
+      - mongo_data:/data/db
+
 volumes:
-  clean-code-deck:
-    external: true
+  mongo_data:
