@@ -1,15 +1,11 @@
-package fr.cleancode.org.server.postgres.repository;
+package fr.cleancode.org.server.mongo.repository;
 
-import fr.cleancode.org.server.postgres.entities.PlayerEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fr.cleancode.org.server.mongo.entities.PlayerEntity;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static org.springframework.transaction.annotation.Propagation.MANDATORY;
-
 @Repository
-@Transactional(propagation = MANDATORY)
-public interface PlayerRepository extends JpaRepository<PlayerEntity, UUID> {
+public interface PlayerRepository extends MongoRepository<PlayerEntity, UUID> {
 }

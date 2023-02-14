@@ -1,18 +1,14 @@
-package fr.cleancode.org.server.postgres.repository;
+package fr.cleancode.org.server.mongo.repository;
 
-import fr.cleancode.org.server.postgres.entities.HeroEntity;
+import fr.cleancode.org.server.mongo.entities.HeroEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static org.springframework.transaction.annotation.Propagation.MANDATORY;
-
 @Repository
-@Transactional(propagation = MANDATORY)
-public interface HeroRepository extends JpaRepository<HeroEntity, UUID> {
+public interface HeroRepository extends MongoRepository<HeroEntity, UUID> {
 
     @EntityGraph(attributePaths = "heroId")
     HeroEntity findHeroEntityByHeroId(UUID heroId);

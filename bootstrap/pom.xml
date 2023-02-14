@@ -18,20 +18,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.vavr</groupId>
-            <artifactId>vavr</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.vavr</groupId>
-            <artifactId>vavr-jackson</artifactId>
-        </dependency>
-        <dependency>
             <groupId>fr.cleancode.org</groupId>
             <artifactId>domain</artifactId>
         </dependency>
         <dependency>
             <groupId>fr.cleancode.org</groupId>
-            <artifactId>postgres-adapter</artifactId>
+            <artifactId>mongo-adapter</artifactId>
         </dependency>
         <dependency>
             <groupId>fr.cleancode.org</groupId>

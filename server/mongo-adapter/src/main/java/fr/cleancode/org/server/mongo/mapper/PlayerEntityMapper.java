@@ -1,7 +1,7 @@
-package fr.cleancode.org.server.postgres.mapper;
+package fr.cleancode.org.server.mongo.mapper;
 
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.server.postgres.entities.PlayerEntity;
+import fr.cleancode.org.server.mongo.entities.PlayerEntity;
 
 public interface PlayerEntityMapper {
 

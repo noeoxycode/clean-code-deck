@@ -1,15 +1,14 @@
-package fr.cleancode.org.server.postgres.adapter;
+package fr.cleancode.org.server.mongo.adapter;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
-import fr.cleancode.org.server.postgres.mapper.HeroEntityMapper;
-import fr.cleancode.org.server.postgres.repository.HeroRepository;
+import fr.cleancode.org.server.mongo.mapper.HeroEntityMapper;
+import fr.cleancode.org.server.mongo.repository.HeroRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +17,6 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
     private final HeroRepository heroRepository;
 
     @Override
-    @Transactional
     public Hero save(Hero hero) {
         val entity = HeroEntityMapper.fromDomain(hero);
         heroRepository.save(entity);
@@ -26,9 +24,7 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Hero findById(UUID heroId) {
-        return HeroEntityMapper
-                .toDomain(heroRepository.findHeroEntityByHeroId(heroId));
+    public List<Hero> findAllHeroes() {
+        return HeroEntityMapper.toDomainList(heroRepository.findAll());
     }
 }

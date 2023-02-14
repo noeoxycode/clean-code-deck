@@ -4,6 +4,9 @@ import fr.cleancode.org.client.rest.hero.dto.HeroCreationRequest;
 import fr.cleancode.org.client.rest.hero.dto.HeroDto;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface HeroDtoMapper {
 
     static HeroDto toDto(Hero hero) {
@@ -19,5 +22,11 @@ public interface HeroDtoMapper {
                 .speciality(dto.speciality())
                 .rarity(dto.rarity())
                 .build();
+    }
+
+    static List<HeroDto> toDtoList(List<Hero> heroes) {
+        return heroes.stream()
+                .map(domain -> toDto(domain))
+                .collect(Collectors.toList());
     }
 }
