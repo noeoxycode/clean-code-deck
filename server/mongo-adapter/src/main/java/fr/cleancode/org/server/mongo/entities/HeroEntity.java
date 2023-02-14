@@ -1,21 +1,24 @@
-package fr.cleancode.org.server.postgres.entities;
+package fr.cleancode.org.server.mongo.entities;
 
 import fr.cleancode.org.domain.hero.functional.model.Rarity;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "hero")
+@Document("hero")
 public class HeroEntity {
 
     @Id

@@ -14,6 +14,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>postgres-adapter</module>
+        <module>mongo-adapter</module>
     </modules>
 </project>

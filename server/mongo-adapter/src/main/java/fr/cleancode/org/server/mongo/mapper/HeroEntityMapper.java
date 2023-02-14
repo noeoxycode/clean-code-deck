@@ -1,7 +1,10 @@
-package fr.cleancode.org.server.postgres.mapper;
+package fr.cleancode.org.server.mongo.mapper;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
-import fr.cleancode.org.server.postgres.entities.HeroEntity;
+import fr.cleancode.org.server.mongo.entities.HeroEntity;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public interface HeroEntityMapper {
 
@@ -31,5 +34,11 @@ public interface HeroEntityMapper {
                 .rarity(domain.getRarity())
                 .level(domain.getLevel())
                 .build();
+    }
+
+    static List<Hero> toDomainList(List<HeroEntity> entityList) {
+        return entityList.stream()
+                .map(entity -> toDomain(entity))
+                .collect(Collectors.toList());
     }
 }

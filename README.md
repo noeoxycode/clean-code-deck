@@ -24,7 +24,7 @@
 * Maven3
     * macOS : execute the command in the terminal ``brew install maven``
     * Windows : see the [tutorial](https://maven.apache.org/install.html)
-* [Docker](https://www.docker.com/) (for postgres database)
+* [Docker](https://www.docker.com/) (for mongo database)
 * [Postman](https://www.postman.com/) (for test REST API)
 
 ---

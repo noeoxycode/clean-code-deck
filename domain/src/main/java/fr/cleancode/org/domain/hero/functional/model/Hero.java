@@ -3,6 +3,7 @@ package fr.cleancode.org.domain.hero.functional.model;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
+import lombok.With;
 
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Data
 public class Hero {
 
+    @With
     @Default
     UUID heroId = UUID.randomUUID();
     String name;
