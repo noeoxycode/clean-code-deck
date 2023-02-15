@@ -11,9 +11,17 @@ public interface HeroDtoMapper {
 
     static HeroDto toDto(Hero hero) {
         return new HeroDto(
+                hero.getHeroId(),
                 hero.getName(),
+                hero.getHealthPoints(),
+                hero.getCurrentExperiences(),
+                hero.getPower(),
+                hero.getArmor(),
                 hero.getSpeciality(),
-                hero.getRarity());
+                hero.getRarity(),
+                hero.getLevel()
+
+        );
     }
 
     static Hero heroCreationToDomain(HeroCreationRequest dto) {

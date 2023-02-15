@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface PlayerPersistenceSpi {
 
-    Player save(Player player);
+    Player create(Player player);
 
     Player findPlayerById(UUID playerId);
 }
