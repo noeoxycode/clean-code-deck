@@ -4,7 +4,7 @@ import fr.cleancode.org.domain.hero.functional.exception.HeroException;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.validation.HeroValidator;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
-import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ import static fr.cleancode.org.domain.hero.functional.service.initialization.Her
 @RequiredArgsConstructor
 public class HeroCreatorService implements HeroCreatorApi {
 
-    private final HeroPersistenceSpi spi;
+    private final HeroCreatorSpi spi;
 
     @Override
     public Hero create(Hero hero) {

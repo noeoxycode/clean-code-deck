@@ -4,9 +4,7 @@ import fr.cleancode.org.domain.hero.functional.model.Hero;
 
 import java.util.List;
 
-public interface HeroPersistenceSpi {
-
-    Hero create(Hero hero);
+public interface HeroFinderSpi {
 
     List<Hero> findAllHeroes();
 }

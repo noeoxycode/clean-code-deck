@@ -2,7 +2,7 @@ package fr.cleancode.org.domain.hero.functional.service;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
-import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +24,7 @@ public class HeroFinderServiceTest {
     private HeroFinderService service;
 
     @Mock
-    private HeroPersistenceSpi spi;
+    private HeroFinderSpi spi;
 
     @Test
     void should_find_heroes() {
@@ -85,5 +85,4 @@ public class HeroFinderServiceTest {
         verify(spi).findAllHeroes();
         verifyNoMoreInteractions(spi);
     }
-
 }

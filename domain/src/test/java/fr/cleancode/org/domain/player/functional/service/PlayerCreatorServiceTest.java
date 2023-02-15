@@ -2,7 +2,7 @@ package fr.cleancode.org.domain.player.functional.service;
 
 import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.domain.player.ports.server.PlayerPersistenceSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ class PlayerCreatorServiceTest {
     private PlayerCreatorService service;
 
     @Mock
-    private PlayerPersistenceSpi spi;
+    private PlayerCreatorSpi spi;
 
     @Test
     void should_create_player() {
