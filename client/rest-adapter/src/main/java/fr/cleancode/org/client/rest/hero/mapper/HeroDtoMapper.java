@@ -26,7 +26,7 @@ public interface HeroDtoMapper {
 
     static List<HeroDto> toDtoList(List<Hero> heroes) {
         return heroes.stream()
-                .map(domain -> toDto(domain))
+                .map(HeroDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

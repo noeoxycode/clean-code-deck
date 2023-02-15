@@ -5,6 +5,9 @@ import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.domain.pack.functional.service.BuyPackService;
+import fr.cleancode.org.domain.pack.functional.service.PackContentGeneratorService;
+import fr.cleancode.org.domain.pack.ports.client.BuyPackApi;
 import fr.cleancode.org.domain.player.functional.service.PlayerCreatorService;
 import fr.cleancode.org.domain.player.functional.service.PlayerFinderService;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
@@ -35,4 +38,10 @@ public class DomainConfiguration {
     public PlayerFinderApi playerFinderService(PlayerPersistenceSpi spi) {
         return new PlayerFinderService(spi);
     }
+
+    @Bean
+    public PackContentGeneratorService packContentGeneratorService(HeroFinderApi api) { return new PackContentGeneratorService(api); }
+
+    @Bean
+    public BuyPackApi buyPackService(PlayerPersistenceSpi spi, PackContentGeneratorService packContentGeneratorService) { return new BuyPackService(spi, packContentGeneratorService); };
 }
