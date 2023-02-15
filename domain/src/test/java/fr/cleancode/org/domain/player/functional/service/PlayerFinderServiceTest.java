@@ -1,7 +1,7 @@
 package fr.cleancode.org.domain.player.functional.service;
 
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.domain.player.ports.server.PlayerPersistenceSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ class PlayerFinderServiceTest {
     private PlayerFinderService service;
 
     @Mock
-    private PlayerPersistenceSpi spi;
+    private PlayerFinderSpi spi;
 
     @Test
     void should_find_player_with_id() {

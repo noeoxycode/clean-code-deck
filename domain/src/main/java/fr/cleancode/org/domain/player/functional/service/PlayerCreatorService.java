@@ -4,7 +4,7 @@ import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.functional.service.validation.PlayerValidator;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
-import fr.cleancode.org.domain.player.ports.server.PlayerPersistenceSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PlayerCreatorService implements PlayerCreatorApi {
 
-    private final PlayerPersistenceSpi spi;
+    private final PlayerCreatorSpi spi;
 
     @Override
     public Player create(Player player) {

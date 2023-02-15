@@ -4,7 +4,7 @@ import fr.cleancode.org.domain.hero.functional.exception.HeroException;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Rarity;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
-import fr.cleancode.org.domain.hero.ports.server.HeroPersistenceSpi;
+import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class HeroCreatorServiceTest {
     @InjectMocks
     private HeroCreatorService service;
     @Mock
-    private HeroPersistenceSpi spi;
+    private HeroCreatorSpi spi;
 
     @Test
     void should_create_hero() {
