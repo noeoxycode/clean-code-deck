@@ -1,7 +1,10 @@
 package fr.cleancode.org.domain.pack.functional.model;
 
+import lombok.Data;
+
+@Data
 public abstract class Pack {
-    public int cost;
-    public int cardsQuantity;
-    public int[] proba;
+    int cost;
+    int cardsQuantity;
+    int[] proba;
 }

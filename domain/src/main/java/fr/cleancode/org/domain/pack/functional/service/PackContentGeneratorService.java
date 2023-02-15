@@ -7,18 +7,21 @@ import fr.cleancode.org.domain.pack.functional.model.Pack;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
 public class PackContentGeneratorService {
     private final HeroFinderApi heroFinderApi;
     public List<Hero> generateContent(Pack pack){
-        List<Hero> packContent = null;
+        List<Hero> packContent = new ArrayList<>();
         List<Hero> heroesList = heroFinderApi.findAllHeroes();
-        for(int i= 0; i < pack.cardsQuantity; i++){
-            packContent.add(getHeroFromPackProba(heroesList, pack.proba));
+        for(int i= 0; i < pack.getCardsQuantity(); i++){
+            packContent.add(getHeroFromPackProba(heroesList, pack.getProba()));
         }
         return packContent;
     }
@@ -33,16 +36,23 @@ public class PackContentGeneratorService {
         return heroesWithRarity.get(randomPosition);
     }
 
-    //care about null
-    private Rarity decideRarity(int[] proba){
+    private Rarity decideRarity(int[] proba) {
         Random random = new Random();
         Rarity rarity = null;
         int rarityValue = 0;
         int randomChoice = random.nextInt(100);
-        for(int i = 0; i < proba.length; i++){
-            rarityValue+= proba[i];
-            if(randomChoice <= rarityValue){
+        int sumProba = 0;
+        for (int p : proba) {
+            sumProba += p;
+        }
+        if (sumProba != 100) {
+            //TODO : error handler
+        }
+        for (int i = 0; i < proba.length; i++) {
+            rarityValue = (i == 0) ? 0 : rarityValue + proba[i - 1];
+            if (randomChoice <= rarityValue + proba[i]) {
                 rarity = Rarity.values()[i];
+                break;
             }
         }
         return rarity;
