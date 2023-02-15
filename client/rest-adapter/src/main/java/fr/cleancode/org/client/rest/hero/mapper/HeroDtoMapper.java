@@ -20,7 +20,6 @@ public interface HeroDtoMapper {
                 hero.getSpeciality(),
                 hero.getRarity(),
                 hero.getLevel()
-
         );
     }
 
