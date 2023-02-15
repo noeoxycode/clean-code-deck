@@ -7,6 +7,7 @@ import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
 import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,13 +21,17 @@ public class PlayerResource {
     private final PlayerFinderApi playerFinderApi;
 
     @PostMapping
-    public PlayerDto createPlayer(@RequestBody PlayerCreationRequest request) {
-        Player player = playerCreatorApi.create(PlayerDtoMapper.playerCreationToDomain(request));
-        return PlayerDtoMapper.toDto(player);
+    public ResponseEntity<PlayerDto> createPlayer(@RequestBody PlayerCreationRequest request) {
+        Player player = playerCreatorApi.create(PlayerDtoMapper
+                .playerCreationToDomain(request));
+        PlayerDto playerDto = PlayerDtoMapper.toDto(player);
+        return ResponseEntity.ok().body(playerDto);
     }
 
     @GetMapping(value = "/{playerId}")
-    public PlayerDto findPlayerById(@PathVariable UUID playerId) {
-        return PlayerDtoMapper.toDto(playerFinderApi.findPlayerById(playerId));
+    public ResponseEntity<PlayerDto> findPlayerById(@PathVariable UUID playerId) {
+        Player player = playerFinderApi.findPlayerById(playerId);
+        PlayerDto playerDto = PlayerDtoMapper.toDto(player);
+        return ResponseEntity.ok().body(playerDto);
     }
 }

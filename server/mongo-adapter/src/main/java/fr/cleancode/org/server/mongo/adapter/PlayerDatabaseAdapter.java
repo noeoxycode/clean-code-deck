@@ -17,7 +17,7 @@ public class PlayerDatabaseAdapter implements PlayerPersistenceSpi {
     private final PlayerRepository playerRepository;
 
     @Override
-    public Player save(Player player) {
+    public Player create(Player player) {
         val entity = PlayerEntityMapper.fromDomain(player);
         playerRepository.save(entity);
         return PlayerEntityMapper.toDomain(entity);

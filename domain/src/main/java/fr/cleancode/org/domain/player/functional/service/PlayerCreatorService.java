@@ -1,5 +1,6 @@
 package fr.cleancode.org.domain.player.functional.service;
 
+import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.functional.service.validation.PlayerValidator;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
@@ -15,7 +16,9 @@ public class PlayerCreatorService implements PlayerCreatorApi {
 
     @Override
     public Player create(Player player) {
-        PlayerValidator.validate(player);
-        return spi.save(player);
+        if (!PlayerValidator.validate(player)) {
+            throw new PlayerException("Unable to validate the player");
+        }
+        return spi.create(player);
     }
 }

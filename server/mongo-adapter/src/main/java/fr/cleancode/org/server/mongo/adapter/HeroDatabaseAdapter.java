@@ -17,7 +17,7 @@ public class HeroDatabaseAdapter implements HeroPersistenceSpi {
     private final HeroRepository heroRepository;
 
     @Override
-    public Hero save(Hero hero) {
+    public Hero create(Hero hero) {
         val entity = HeroEntityMapper.fromDomain(hero);
         heroRepository.save(entity);
         return HeroEntityMapper.toDomain(entity);

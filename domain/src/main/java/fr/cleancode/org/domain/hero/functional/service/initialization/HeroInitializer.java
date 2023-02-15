@@ -49,5 +49,4 @@ public interface HeroInitializer {
         }
         return hero;
     }
-
 }
