@@ -14,7 +14,7 @@ class HeroValidatorTest {
 
     @Test
     void should_validate() {
-        val hero = Hero.builder()
+        val given = Hero.builder()
                 .heroId(UUID.randomUUID())
                 .name("Dragon")
                 .healthPoints(1000)
@@ -25,13 +25,23 @@ class HeroValidatorTest {
                 .rarity(Rarity.LEGENDARY)
                 .level(1)
                 .build();
-        val actual = HeroValidator.validate(hero);
-        assertThat(actual).isInstanceOf(Hero.class);
+
+        val actual = HeroValidator.validate(given);
+
+        assertThat(actual).isTrue();
     }
 
-//    @Test
-//    void should_not_validate() {
-//        val actual = HeroValidator.validate(Hero.builder().build());
-//        assertThat(actual).isInstanceOf(ApplicationError.class);
-//    }
+    @Test
+    void should_not_validate() {
+        val given = Hero.builder()
+                .heroId(null)
+                .name(null)
+                .speciality(null)
+                .rarity(null)
+                .build();
+
+        val actual = HeroValidator.validate(given);
+
+        assertThat(actual).isFalse();
+    }
 }
