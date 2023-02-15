@@ -21,7 +21,6 @@ public class HeroCreatorService implements HeroCreatorApi {
     public Hero create(Hero hero) {
         initializeHeroPropertiesBySpeciality(hero);
         initializeHeroPropertiesByRarity(hero);
-
         if (!HeroValidator.validate(hero)) {
             throw new HeroException("Unable to validate the hero");
         }
