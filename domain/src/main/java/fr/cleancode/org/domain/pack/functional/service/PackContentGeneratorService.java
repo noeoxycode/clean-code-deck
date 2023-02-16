@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class PackContentGeneratorService {
         return heroesWithRarity.get(randomPosition);
     }
 
-    private Rarity decideRarity(int[] proba) {
+    private Rarity decideRarity(int[] proba) throws IllegalArgumentException {
         Random random = new Random();
         Rarity rarity = null;
         int rarityValue = 0;
@@ -46,7 +44,7 @@ public class PackContentGeneratorService {
             sumProba += p;
         }
         if (sumProba != 100) {
-            //TODO : error handler
+            throw new IllegalArgumentException("Invalid pack probabilities");
         }
         for (int i = 0; i < proba.length; i++) {
             rarityValue = (i == 0) ? 0 : rarityValue + proba[i - 1];

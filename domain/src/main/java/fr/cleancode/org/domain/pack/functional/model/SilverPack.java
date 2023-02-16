@@ -14,5 +14,5 @@ class SilverPack extends Pack {
     @Default
     int cardsQuantity = 3;
     @Default
-    int[] proba = {75, 25, 5};
+    int[] proba = {75, 20, 5};
 }
