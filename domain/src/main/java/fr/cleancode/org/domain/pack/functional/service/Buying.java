@@ -10,16 +10,10 @@ import java.text.ParseException;
 public interface Buying {
     default void payProduct(Player player, int price) throws PaymentException{
         if(PaymentValidator.validate(player, price)){
-            int remainingBalance = spendMoney(player, price);
-            player.setToken(remainingBalance);
+            player.setToken(player.getToken()-price);
         }
         else {
             throw  new PaymentException("Payment invalidated");
         }
-    }
-
-    private int spendMoney(Player user, int price){
-        user.setToken(user.getToken()-price);
-        return user.getToken();
     }
 }
