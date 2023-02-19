@@ -17,4 +17,8 @@ public class HeroFinderService implements HeroFinderApi {
     public List<Hero> findAllHeroes() {
         return spi.findAllHeroes();
     }
+
+    public List<Hero> findAllHeroesAviableToFight() {
+        return spi.findAllHeroes();
+    }
 }

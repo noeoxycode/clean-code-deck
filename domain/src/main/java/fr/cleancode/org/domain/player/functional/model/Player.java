@@ -1,5 +1,6 @@
 package fr.cleancode.org.domain.player.functional.model;
 
+import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -19,4 +20,7 @@ public class Player {
     int token = 4;
     @Default
     List<Hero> deck = List.of();
+
+    @Default
+    List<UUID> fights = List.of();
 }
