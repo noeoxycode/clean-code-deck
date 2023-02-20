@@ -1,14 +1,17 @@
 package fr.cleancode.org.server.mongo.adapter;
 
+import fr.cleancode.org.domain.player.functional.exception.PlayerNotFoundException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
+import fr.cleancode.org.server.mongo.entities.PlayerEntity;
 import fr.cleancode.org.server.mongo.mapper.PlayerEntityMapper;
 import fr.cleancode.org.server.mongo.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,9 +28,13 @@ public class PlayerDatabaseAdapter implements PlayerFinderSpi, PlayerCreatorSpi 
     }
 
     @Override
-    public Player findPlayerById(UUID playerId) {
-        return PlayerEntityMapper
-                .toDomain(playerRepository
-                        .findPlayerEntitiesByPlayerId(playerId));
+    public Optional<Player> findPlayerById(UUID playerId) {
+        Optional<PlayerEntity> player = playerRepository.findById(playerId);
+        return Optional.ofNullable(player
+                .map(PlayerEntityMapper::toDomain)
+                .orElseThrow(
+                        () -> new PlayerNotFoundException("Player with id : "
+                                + playerId + " was not found !"))
+        );
     }
 }
