@@ -4,6 +4,7 @@ import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
 import fr.cleancode.org.domain.fight.port.client.Fightapi;
+import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
@@ -25,16 +26,20 @@ public class FightService implements Fightapi {
 
     private final PlayerFinderApi playerFinderApi;
 
-    private final PlayerUpdateSpi spi;
+    private final PlayerUpdateSpi playerUpdateSpi;
 
-    public Fight fight(Fight fight, UUID attackerId) {
-    Player player = playerFinderApi.findPlayerById(attackerId);
+    private final FightCreatorSpi fightCreatorSpi;
+
+    public Fight fight(Fight fight, UUID idPlayer) {
+    Player player = playerFinderApi.findPlayerById(idPlayer);
     Hero attacker = null;
     Hero defender = null;
     List<Hero> listHeroes = heroFinderApi.findAllCarts();
     for(Hero hero : listHeroes){
         if(hero.getHeroId().equals(fight.getAttacker()) ){
             attacker = hero;
+            System.out.println("id de attacker dans le for");
+            System.out.println(attacker.getHeroId());
         }
         if(hero.getHeroId().equals(fight.getDefender())){
             defender = hero;
@@ -44,21 +49,42 @@ public class FightService implements Fightapi {
         throw new FightException("Hero not found");
     }
     FightValidator.fightParametersChecking(player, fight, attacker, defender);
-    fight.setWinner(figthing(attacker, defender));
-    if(fight.getWinner().equals(fight.getAttacker())){
+        System.out.println("id attacker apres figtValidator");
+        System.out.println(attacker.getHeroId());
+    UUID winner = figthing(attacker, defender);
+        System.out.println("id attacker apres fighting");
+        System.out.println(attacker.getHeroId());
+    fight.setWinner(winner);
+    if (fight.getWinner().equals(fight.getAttacker())) {
         updateXp(attacker);
-        List<Hero> newDeck = new ArrayList<>(player.getDeck());
-        newDeck.removeIf(hero -> hero.getHeroId().equals(attackerId));
-        newDeck.add(attacker);
-        player.setDeck(newDeck);
-
-        player.getDeck().add(attacker);
+        System.out.println("id attacker apres updatexp");
+        System.out.println(attacker.getHeroId());
+        List<Hero> deck = player.getDeck();
+        int index = -1;
+        for (int i = 0; i < deck.size(); i++) {
+            System.out.println("hero du deck");
+            System.out.println(deck.get(i).getHeroId());
+            System.out.println("hero id a comparer avec");
+            System.out.println(attacker.getHeroId());
+            if (deck.get(i).getHeroId().equals(attacker.getHeroId())) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+            deck.set(index, attacker);
+            player.setDeck(deck);
+        }
     }
     if(FightValidator.validate(fight)){
-        List<UUID> newHistoFights = new ArrayList<>(player.getFights());
+        List<UUID> newHistoFights = new ArrayList<>();
+        if(player.getFights() != null){
+            newHistoFights.addAll(player.getFights());
+        }
         newHistoFights.add(fight.getFightId());
         player.setFights(newHistoFights);
-        spi.update(player);
+        playerUpdateSpi.update(player);
+        fightCreatorSpi.create(fight);
         return fight;
     }
     else throw new FightException("Error while fighting");

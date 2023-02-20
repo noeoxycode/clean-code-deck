@@ -13,6 +13,7 @@ public record PlayerDto(
         UUID playerId,
         String pseudo,
         int token,
-        List<Hero> deck
+        List<Hero> deck,
+        List<UUID> fights
 ) {
 }

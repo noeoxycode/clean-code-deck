@@ -31,7 +31,6 @@ public interface FightValidator {
         for (Hero hero : attacker.getDeck()) {
             if (hero.getHeroId().equals(fight.getAttacker())) {
                 playerAttacksWithHisMonster = true;
-                System.out.println(playerAttacksWithHisMonster);
             }
             if(hero.getHeroId().equals(fight.getDefender())){
                 playerDoesntAttackHisOwnMonster = false;

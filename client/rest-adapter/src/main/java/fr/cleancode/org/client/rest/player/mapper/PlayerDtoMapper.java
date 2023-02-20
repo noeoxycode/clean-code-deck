@@ -11,7 +11,8 @@ public interface PlayerDtoMapper {
                 player.getPlayerId(),
                 player.getPseudo(),
                 player.getToken(),
-                player.getDeck()
+                player.getDeck(),
+                player.getFights()
         );
     }
 
