@@ -4,5 +4,5 @@ import fr.cleancode.org.domain.hero.functional.model.Hero;
 
 public interface HeroCreatorSpi {
 
-    Hero create(Hero hero);
+    Hero save(Hero hero);
 }

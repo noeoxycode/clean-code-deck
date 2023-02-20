@@ -6,6 +6,10 @@ import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
+import fr.cleancode.org.domain.pack.functional.service.OpenPackService;
+import fr.cleancode.org.domain.pack.functional.service.PackContentService;
+import fr.cleancode.org.domain.pack.functional.service.generator.PackContentGeneratorService;
+import fr.cleancode.org.domain.pack.ports.client.OpenPackApi;
 import fr.cleancode.org.domain.player.functional.service.PlayerCreatorService;
 import fr.cleancode.org.domain.player.functional.service.PlayerFinderService;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
@@ -36,5 +40,21 @@ public class DomainConfiguration {
     @Bean
     public PlayerFinderApi playerFinderService(PlayerFinderSpi spi) {
         return new PlayerFinderService(spi);
+    }
+
+    @Bean
+    public OpenPackApi openPackService(
+            PlayerFinderSpi playerFinderSpi,
+            PlayerCreatorSpi playerCreatorSpi,
+            HeroFinderSpi heroFinderSpi
+    ) {
+        PackContentGeneratorService packContentGeneratorService =
+                new PackContentGeneratorService(heroFinderSpi);
+        PackContentService packContentService =
+                new PackContentService(packContentGeneratorService);
+
+        return new OpenPackService(playerFinderSpi,
+                playerCreatorSpi,
+                packContentService);
     }
 }

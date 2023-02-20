@@ -21,7 +21,7 @@ public class CreatePlayerResource {
 
     @PostMapping
     public ResponseEntity<PlayerDto> createPlayer(@RequestBody PlayerCreationRequest request) {
-        Player player = playerCreatorApi.create(PlayerDtoMapper
+        Player player = playerCreatorApi.save(PlayerDtoMapper
                 .playerCreationToDomain(request));
         PlayerDto playerDto = PlayerDtoMapper.toDto(player);
         return ResponseEntity.ok().body(playerDto);

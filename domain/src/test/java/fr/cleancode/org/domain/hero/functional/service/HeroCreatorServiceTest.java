@@ -41,9 +41,9 @@ class HeroCreatorServiceTest {
                 .level(1)
                 .build();
 
-        when(spi.create(given)).thenReturn(given);
+        when(spi.save(given)).thenReturn(given);
 
-        val actual = service.create(given);
+        val actual = service.save(given);
 
         assertThat(actual)
                 .usingRecursiveComparison()
@@ -63,7 +63,7 @@ class HeroCreatorServiceTest {
 
         assertThatExceptionOfType(HeroException.class)
                 .isThrownBy(() ->
-                        service.create(given));
+                        service.save(given));
 
         verifyNoInteractions(spi);
     }
