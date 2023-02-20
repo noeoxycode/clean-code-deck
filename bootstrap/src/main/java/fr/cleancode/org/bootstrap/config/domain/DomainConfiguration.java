@@ -1,7 +1,7 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
 import fr.cleancode.org.domain.fight.functional.service.FightService;
-import fr.cleancode.org.domain.fight.port.client.Fightapi;
+import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.service.HeroCreatorService;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
@@ -43,5 +43,5 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public Fightapi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerUpdateSpi playerUpdateSpi, FightCreatorSpi fightCreatorSpi){ return new FightService(heroFinderApi, playerFinderApi, playerUpdateSpi, fightCreatorSpi);}
+    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerUpdateSpi playerUpdateSpi, FightCreatorSpi fightCreatorSpi){ return new FightService(heroFinderApi, playerFinderApi, playerUpdateSpi, fightCreatorSpi);}
 }

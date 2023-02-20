@@ -3,7 +3,7 @@ package fr.cleancode.org.domain.fight.functional.service;
 import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
-import fr.cleancode.org.domain.fight.port.client.Fightapi;
+import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FightService implements Fightapi {
+public class FightService implements FightApi {
 
     private final HeroFinderApi heroFinderApi;
 
