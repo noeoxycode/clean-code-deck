@@ -4,5 +4,5 @@ import fr.cleancode.org.domain.player.functional.model.Player;
 
 public interface PlayerCreatorSpi {
 
-    Player create(Player player);
+    Player save(Player player);
 }

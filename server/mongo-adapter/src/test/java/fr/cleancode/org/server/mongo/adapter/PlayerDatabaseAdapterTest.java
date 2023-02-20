@@ -47,7 +47,7 @@ class PlayerDatabaseAdapterTest {
                     .save(any(PlayerEntity.class)))
                     .thenReturn(entity);
 
-            val actual = playerDatabaseAdapter.create(player);
+            val actual = playerDatabaseAdapter.save(player);
 
             verify(playerRepository)
                     .save(entityArgumentCaptor
@@ -73,7 +73,7 @@ class PlayerDatabaseAdapterTest {
             when(playerRepository.save(entity)).thenThrow(throwable);
 
             assertThatExceptionOfType(IllegalArgumentException.class)
-                    .isThrownBy(() -> playerDatabaseAdapter.create(player));
+                    .isThrownBy(() -> playerDatabaseAdapter.save(player));
             verify(playerRepository)
                     .save(entityArgumentCaptor
                             .capture());

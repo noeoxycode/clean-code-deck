@@ -24,7 +24,7 @@ public class CreateHeroResource {
     public ResponseEntity<HeroDto> createHero(@RequestBody HeroCreationRequest request) {
         HeroDto heroDto = HeroDtoMapper
                 .toDto(heroCreatorApi
-                        .create(heroCreationToDomain(request)));
+                        .save(heroCreationToDomain(request)));
         return ResponseEntity.ok().body(heroDto);
     }
 }

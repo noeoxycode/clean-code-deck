@@ -21,7 +21,7 @@ public class PlayerDatabaseAdapter implements PlayerFinderSpi, PlayerCreatorSpi 
     private final PlayerRepository playerRepository;
 
     @Override
-    public Player create(Player player) {
+    public Player save(Player player) {
         val entity = PlayerEntityMapper.fromDomain(player);
         playerRepository.save(entity);
         return PlayerEntityMapper.toDomain(entity);

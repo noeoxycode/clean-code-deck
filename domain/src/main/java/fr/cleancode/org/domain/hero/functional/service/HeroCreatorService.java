@@ -18,12 +18,12 @@ public class HeroCreatorService implements HeroCreatorApi {
     private final HeroCreatorSpi spi;
 
     @Override
-    public Hero create(Hero hero) {
+    public Hero save(Hero hero) {
         initializeHeroPropertiesBySpeciality(hero);
         initializeHeroPropertiesByRarity(hero);
         if (!HeroValidator.validate(hero)) {
             throw new HeroException("Unable to validate the hero");
         }
-        return spi.create(hero);
+        return spi.save(hero);
     }
 }
