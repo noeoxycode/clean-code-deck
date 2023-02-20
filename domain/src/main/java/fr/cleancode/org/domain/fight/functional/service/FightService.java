@@ -30,71 +30,24 @@ public class FightService implements Fightapi {
 
     private final FightCreatorSpi fightCreatorSpi;
 
-    public Fight fight(Fight fight, UUID idPlayer) {
-    Player player = playerFinderApi.findPlayerById(idPlayer);
-    Hero attacker = null;
-    Hero defender = null;
-    List<Hero> listHeroes = heroFinderApi.findAllCarts();
-    for(Hero hero : listHeroes){
-        if(hero.getHeroId().equals(fight.getAttacker()) ){
-            attacker = hero;
-            System.out.println("id de attacker dans le for");
-            System.out.println(attacker.getHeroId());
-        }
-        if(hero.getHeroId().equals(fight.getDefender())){
-            defender = hero;
-        }
-    }
-    if(attacker == null || defender == null){
-        throw new FightException("Hero not found");
-    }
-    FightValidator.fightParametersChecking(player, fight, attacker, defender);
-        System.out.println("id attacker apres figtValidator");
-        System.out.println(attacker.getHeroId());
-    UUID winner = figthing(attacker, defender);
-        System.out.println("id attacker apres fighting");
-        System.out.println(attacker.getHeroId());
-    fight.setWinner(winner);
-    if (fight.getWinner().equals(fight.getAttacker())) {
-        updateXp(attacker);
-        System.out.println("id attacker apres updatexp");
-        System.out.println(attacker.getHeroId());
-        List<Hero> deck = player.getDeck();
-        int index = -1;
-        for (int i = 0; i < deck.size(); i++) {
-            System.out.println("hero du deck");
-            System.out.println(deck.get(i).getHeroId());
-            System.out.println("hero id a comparer avec");
-            System.out.println(attacker.getHeroId());
-            if (deck.get(i).getHeroId().equals(attacker.getHeroId())) {
-                index = i;
-                break;
-            }
-        }
-        if (index >= 0) {
-            deck.set(index, attacker);
-            player.setDeck(deck);
-        }
-    }
-    if(FightValidator.validate(fight)){
-        List<UUID> newHistoFights = new ArrayList<>();
-        if(player.getFights() != null){
-            newHistoFights.addAll(player.getFights());
-        }
-        newHistoFights.add(fight.getFightId());
-        player.setFights(newHistoFights);
-        playerUpdateSpi.update(player);
+    public Fight fight(Fight fight, UUID playerId) {
+        Player player = playerFinderApi.findPlayerById(playerId);
+        Hero attacker = heroFinderApi.findHeroById(fight.getAttacker())
+                .orElseThrow(() -> new FightException("Attacker not found"));
+        Hero defender = heroFinderApi.findHeroById(fight.getDefender())
+                .orElseThrow(() -> new FightException("Defender not found"));
+        FightValidator.validate(fight);
+        UUID winner = fight(attacker, defender);
+        fight.setWinner(winner);
+        updatePlayerAndHero(player, fight, attacker, winner);
         fightCreatorSpi.create(fight);
         return fight;
     }
-    else throw new FightException("Error while fighting");
-    }
 
-    public UUID figthing(Hero attacker, Hero defender){
+    private UUID fight(Hero attacker, Hero defender) {
+        attacker.setPower(attacker.getPower() + calculateMatchupBuff(attacker, defender));
+        defender.setPower(defender.getPower() + calculateMatchupBuff(defender, attacker));
         int turn = 0;
-        attacker.setPower(attacker.getPower() + matchupBuff(attacker, defender));
-        defender.setPower(attacker.getPower() + matchupBuff(defender, attacker));
-
         while (attacker.getHealthPoints() > 0 && defender.getHealthPoints() > 0) {
             if (turn % 2 == 0) {
                 attack(attacker, defender);
@@ -103,15 +56,10 @@ public class FightService implements Fightapi {
             }
             turn++;
         }
-        if(attacker.getHealthPoints() <= 0){
-            return defender.getHeroId();
-        }
-        else {
-            return attacker.getHeroId();
-        }
+        return attacker.getHealthPoints() > 0 ? attacker.getHeroId() : defender.getHeroId();
     }
 
-    int matchupBuff(Hero attacker, Hero defender) {
+    private int calculateMatchupBuff(Hero attacker, Hero defender) {
         if (attacker.getSpeciality() == Speciality.TANK && defender.getSpeciality() == Speciality.MAGE) {
             return 20;
         } else if (attacker.getSpeciality() == Speciality.ASSASSIN && defender.getSpeciality() == Speciality.TANK) {
@@ -123,22 +71,43 @@ public class FightService implements Fightapi {
         }
     }
 
-    void attack(Hero attacker, Hero defender){
-        defender.setHealthPoints(
-                defender.getHealthPoints() -
-                        (attacker.getPower() - defender.getArmor())
-        );
+    private void attack(Hero attacker, Hero defender) {
+        defender.setHealthPoints(defender.getHealthPoints() - (attacker.getPower() - defender.getArmor()));
     }
 
-    void updateXp(Hero hero){
-        if(hero.getCurrentExperiences() == 4){
+    private void updatePlayerAndHero(Player player, Fight fight, Hero attacker, UUID winner) {
+        if (winner.equals(attacker.getHeroId())) {
+            updateHero(attacker);
+            updatePlayerDeck(player, attacker);
+            if(player.getFights() != null){
+                List<UUID> newHistoFights = new ArrayList<>(player.getFights());
+                newHistoFights.add(fight.getFightId());
+                player.setFights(newHistoFights);
+            }
+        }
+        playerUpdateSpi.update(player);
+    }
+
+    private void updateHero(Hero hero) {
+        hero.setCurrentExperiences(hero.getCurrentExperiences() + 1);
+        if (hero.getCurrentExperiences() >= 4) {
             hero.setCurrentExperiences(0);
-            hero.setLevel(hero.getLevel()+1);
-        }
-        else {
-            hero.setCurrentExperiences(hero.getCurrentExperiences()+1);
+            hero.setLevel(hero.getLevel() + 1);
         }
     }
 
-
+    private void updatePlayerDeck(Player player, Hero updatedHero) {
+        List<Hero> deck = player.getDeck();
+        int index = -1;
+        for(int i = 0; i < deck.size(); i++){
+            if (deck.get(i).getHeroId().equals(updatedHero.getHeroId())) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+            deck.set(index, updatedHero);
+            player.setDeck(deck);
+        }
+    }
 }
