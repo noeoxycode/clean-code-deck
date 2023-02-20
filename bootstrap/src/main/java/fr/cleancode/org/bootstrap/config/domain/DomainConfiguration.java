@@ -1,5 +1,7 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
+import fr.cleancode.org.domain.fight.functional.service.FightService;
+import fr.cleancode.org.domain.fight.port.client.Fightapi;
 import fr.cleancode.org.domain.hero.functional.service.HeroCreatorService;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
@@ -12,6 +14,7 @@ import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
 import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
 import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerUpdateSpi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,8 +27,8 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public HeroFinderApi heroFinderService(HeroFinderSpi spi) {
-        return new HeroFinderService(spi);
+    public HeroFinderApi heroFinderService(HeroFinderSpi spi, PlayerFinderSpi playerFinderSpi) {
+        return new HeroFinderService(spi, playerFinderSpi);
     }
 
     @Bean
@@ -37,4 +40,7 @@ public class DomainConfiguration {
     public PlayerFinderApi playerFinderService(PlayerFinderSpi spi) {
         return new PlayerFinderService(spi);
     }
+
+    @Bean
+    public Fightapi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi,PlayerUpdateSpi playerUpdateSpi){ return new FightService(heroFinderApi, playerFinderApi, playerUpdateSpi);}
 }

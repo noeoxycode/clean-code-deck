@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface HeroFinderApi {
     List<Hero> findAllHeroes();
+
+    List<Hero> findAllCarts();
 }

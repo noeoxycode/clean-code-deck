@@ -1,10 +1,9 @@
 package fr.cleancode.org.domain.fight.functional.model;
 
-
-import fr.cleancode.org.domain.hero.functional.model.Hero;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
+import lombok.With;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,6 +11,11 @@ import java.util.UUID;
 @Builder
 @Data
 public class Fight {
+
+    @With
+    @Default
+    UUID fightId = UUID.randomUUID();
+
     @Default
     LocalDate date = LocalDate.now();
 

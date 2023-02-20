@@ -3,6 +3,9 @@ package fr.cleancode.org.server.mongo.mapper;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.server.mongo.entities.PlayerEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface PlayerEntityMapper {
 
     static Player toDomain(PlayerEntity entity) {
@@ -21,5 +24,11 @@ public interface PlayerEntityMapper {
                 .token(domain.getToken())
                 .deck(domain.getDeck())
                 .build();
+    }
+
+    static List<Player> toDomainList(List<PlayerEntity> entityList) {
+        return entityList.stream()
+                .map(entity -> toDomain(entity))
+                .collect(Collectors.toList());
     }
 }
