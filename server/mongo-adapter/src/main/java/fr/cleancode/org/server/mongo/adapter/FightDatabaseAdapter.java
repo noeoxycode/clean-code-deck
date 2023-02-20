@@ -19,14 +19,15 @@ public class FightDatabaseAdapter implements FightFinderSpi, FightCreatorSpi {
     private final FightRepository fightRepository;
 
     @Override
-    public Fight create(Fight fight) {
+    public Fight save(Fight fight) {
         val entity = FightEntityMapper.fromDomain(fight);
         fightRepository.save(entity);
         return FightEntityMapper.toDomain(entity);
     }
 
-    @Override
+    /*@Override
     public List<Fight> findAllFights() {
         return FightEntityMapper.toDomainList(fightRepository.findAll());
-    }
+    }*/
+
 }

@@ -19,6 +19,6 @@ public class PlayerCreatorService implements PlayerCreatorApi {
         if (!PlayerValidator.validate(player)) {
             throw new PlayerException("Unable to validate the player");
         }
-        return spi.create(player);
+        return spi.save(player);
     }
 }

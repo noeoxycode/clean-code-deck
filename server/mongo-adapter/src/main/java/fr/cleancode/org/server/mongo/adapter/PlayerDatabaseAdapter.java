@@ -3,7 +3,6 @@ package fr.cleancode.org.server.mongo.adapter;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
-import fr.cleancode.org.domain.player.ports.server.PlayerUpdateSpi;
 import fr.cleancode.org.server.mongo.mapper.PlayerEntityMapper;
 import fr.cleancode.org.server.mongo.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +14,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PlayerDatabaseAdapter implements PlayerFinderSpi, PlayerCreatorSpi, PlayerUpdateSpi {
+public class PlayerDatabaseAdapter implements PlayerFinderSpi, PlayerCreatorSpi {
 
     private final PlayerRepository playerRepository;
 
     @Override
-    public Player create(Player player) {
-        val entity = PlayerEntityMapper.fromDomain(player);
-        playerRepository.save(entity);
-        return PlayerEntityMapper.toDomain(entity);
-    }
-
-    @Override
-    public Player update(Player player) {
+    public Player save(Player player) {
         val entity = PlayerEntityMapper.fromDomain(player);
         playerRepository.save(entity);
         return PlayerEntityMapper.toDomain(entity);

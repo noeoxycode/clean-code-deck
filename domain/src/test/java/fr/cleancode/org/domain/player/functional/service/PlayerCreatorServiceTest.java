@@ -35,7 +35,7 @@ class PlayerCreatorServiceTest {
                 .token(4)
                 .build();
 
-        when(spi.create(given)).thenReturn(given);
+        when(spi.save(given)).thenReturn(given);
 
         val actual = service.create(given);
 

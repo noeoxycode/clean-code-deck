@@ -10,7 +10,7 @@ import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
-import fr.cleancode.org.domain.player.ports.server.PlayerUpdateSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class FightService implements FightApi {
 
     private final PlayerFinderApi playerFinderApi;
 
-    private final PlayerUpdateSpi playerUpdateSpi;
+    private final PlayerCreatorSpi playerCreatorSpi;
 
     private final FightCreatorSpi fightCreatorSpi;
 
@@ -40,7 +40,7 @@ public class FightService implements FightApi {
         UUID winner = fight(attacker, defender);
         fight.setWinner(winner);
         updatePlayerAndHero(player, fight, attacker, winner);
-        fightCreatorSpi.create(fight);
+        fightCreatorSpi.save(fight);
         return fight;
     }
 
@@ -85,7 +85,7 @@ public class FightService implements FightApi {
                 player.setFights(newHistoFights);
             }
         }
-        playerUpdateSpi.update(player);
+        playerCreatorSpi.save(player);
     }
 
     private void updateHero(Hero hero) {

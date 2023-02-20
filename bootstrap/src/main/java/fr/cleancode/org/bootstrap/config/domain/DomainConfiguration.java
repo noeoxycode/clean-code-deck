@@ -15,7 +15,6 @@ import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
 import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
 import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
-import fr.cleancode.org.domain.player.ports.server.PlayerUpdateSpi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -43,5 +42,5 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerUpdateSpi playerUpdateSpi, FightCreatorSpi fightCreatorSpi){ return new FightService(heroFinderApi, playerFinderApi, playerUpdateSpi, fightCreatorSpi);}
+    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerCreatorSpi playerCreatorSpi, FightCreatorSpi fightCreatorSpi){ return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi);}
 }
