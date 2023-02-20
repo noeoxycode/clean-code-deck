@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,11 +21,11 @@ public class FinderPlayerResource {
 
     private final PlayerFinderApi playerFinderApi;
 
-
     @GetMapping(value = "/{playerId}")
     public ResponseEntity<PlayerDto> findPlayerById(@PathVariable UUID playerId) {
-        Player player = playerFinderApi.findPlayerById(playerId);
-        PlayerDto playerDto = PlayerDtoMapper.toDto(player);
-        return ResponseEntity.ok().body(playerDto);
+        Optional<Player> player = playerFinderApi.findPlayerById(playerId);
+        return player.map(PlayerDtoMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
     }
 }

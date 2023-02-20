@@ -1,5 +1,6 @@
 package fr.cleancode.org.server.mongo.adapter;
 
+import fr.cleancode.org.domain.player.functional.exception.PlayerNotFoundException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.server.mongo.entities.PlayerEntity;
 import fr.cleancode.org.server.mongo.mapper.PlayerEntityMapper;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -88,34 +90,37 @@ class PlayerDatabaseAdapterTest {
         @Test
         void should_find_player_by_id() {
             val id = UUID.randomUUID();
-            val entity = PlayerEntity.builder().build();
-            val domain = PlayerEntityMapper.toDomain(entity);
+            val entity = PlayerEntity
+                    .builder()
+                    .playerId(id)
+                    .build();
+            val domain = PlayerEntityMapper
+                    .toDomain(entity);
 
             when(playerRepository
-                    .findPlayerEntitiesByPlayerId(id))
-                    .thenReturn(entity);
+                    .findById(id))
+                    .thenReturn(Optional.of(entity));
 
-            val actual = playerDatabaseAdapter.findPlayerById(id);
+            val actual = playerDatabaseAdapter.findPlayerById(id).get();
 
-            assertThat(actual)
-                    .usingRecursiveComparison()
-                    .isEqualTo(domain);
+            assertThat(actual).isEqualTo(domain);
+            verify(playerRepository).findById(id);
             verifyNoMoreInteractions(playerRepository);
         }
 
         @Test
         void should_not_find_player_by_id() {
             val id = UUID.randomUUID();
-            val throwable = new IllegalArgumentException();
+            val throwable = new PlayerNotFoundException("The player was not found !");
 
-            when(playerRepository.findPlayerEntitiesByPlayerId(id))
+            when(playerRepository.findById(id))
                     .thenThrow(throwable);
 
-            assertThatExceptionOfType(IllegalArgumentException.class)
+            assertThatExceptionOfType(PlayerNotFoundException.class)
                     .isThrownBy(() ->
                             playerDatabaseAdapter.findPlayerById(id)
                     );
-            verify(playerRepository).findPlayerEntitiesByPlayerId(id);
+            verify(playerRepository).findById(id);
             verifyNoMoreInteractions(playerRepository);
         }
     }
