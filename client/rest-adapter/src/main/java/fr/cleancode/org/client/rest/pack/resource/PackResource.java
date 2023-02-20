@@ -19,8 +19,10 @@ public class PackResource {
     private final OpenPackApi openPackApi;
 
     @PostMapping
-    public List<HeroDto> openPack(@PathVariable UUID playerId
-            , @RequestBody PackCreationRequest request) {
+    public List<HeroDto> openPack(
+            @PathVariable UUID playerId,
+            @RequestBody PackCreationRequest request
+    ) {
         List<Hero> packContent = openPackApi
                 .openPack(playerId, request.packType());
         return HeroDtoMapper.toDtoList(packContent);
