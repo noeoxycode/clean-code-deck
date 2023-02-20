@@ -36,7 +36,7 @@ public class FightService implements FightApi {
                 .orElseThrow(() -> new FightException("Attacker not found"));
         Hero defender = heroFinderApi.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
-        FightValidator.validate(fight);
+        FightValidator.validate(player, fight, attacker, defender);
         UUID winner = fight(attacker, defender);
         fight.setWinner(winner);
         updatePlayerAndHero(player, fight, attacker, winner);

@@ -7,11 +7,14 @@ import fr.cleancode.org.domain.player.functional.model.Player;
 
 public interface FightValidator {
 
-    static boolean validate(Fight fight) {
-        return fight.getDate() != null
+    static void validate(Player player, Fight fight, Hero attacker, Hero defender) {
+        fightParametersChecking(player, fight, attacker, defender);
+        if(!(fight.getDate() != null
                 && fight.getAttacker() != null
                 && fight.getDefender() != null
-                && fight.getWinner() != null;
+                && fight.getWinner() != null)){
+            throw new FightException("Bad Fight data");
+        }
     }
 
     static void fightParametersChecking(Player player, Fight fight, Hero attacker, Hero defender){
