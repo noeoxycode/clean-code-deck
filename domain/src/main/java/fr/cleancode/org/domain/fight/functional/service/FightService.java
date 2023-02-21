@@ -82,7 +82,7 @@ public class FightService implements FightApi {
         if (winner.equals(attacker.getHeroId())) {
             updateHero(attacker);
             updatePlayerDeck(player, attacker);
-            if(player.getFights() != null){
+            if (player.getFights() != null) {
                 List<UUID> newHistoFights = new ArrayList<>(player.getFights());
                 newHistoFights.add(fight.getFightId());
                 player.setFights(newHistoFights);
@@ -96,11 +96,10 @@ public class FightService implements FightApi {
         if (hero.getCurrentExperiences() >= 4) {
             hero.setCurrentExperiences(0);
             hero.setLevel(hero.getLevel() + 1);
-            hero.setHealthPoints( (int) Math.round(hero.getHealthPoints()*1.1));
-            hero.setPower( (int) Math.round(hero.getPower()*1.1));
-            hero.setArmor( (int) Math.round(hero.getArmor()*1.1));
-        }
-        else {
+            hero.setHealthPoints((int) Math.round(hero.getHealthPoints() * 1.1));
+            hero.setPower((int) Math.round(hero.getPower() * 1.1));
+            hero.setArmor((int) Math.round(hero.getArmor() * 1.1));
+        } else {
             hero.setCurrentExperiences(hero.getCurrentExperiences() + 1);
         }
     }
@@ -108,7 +107,7 @@ public class FightService implements FightApi {
     private void updatePlayerDeck(Player player, Hero updatedHero) {
         List<Hero> deck = player.getDeck();
         int index = -1;
-        for(int i = 0; i < deck.size(); i++){
+        for (int i = 0; i < deck.size(); i++) {
             if (deck.get(i).getHeroId().equals(updatedHero.getHeroId())) {
                 index = i;
                 break;
@@ -120,18 +119,17 @@ public class FightService implements FightApi {
         }
     }
 
-    private void earningToken(Player player){
+    private void earningToken(Player player) {
         List<Fight> fightHistory = fightFinderSpi.findAllFights();
         List<UUID> playersHeroesId = new ArrayList<>();
-        for(Hero hero : player.getDeck()){
+        for (Hero hero : player.getDeck()) {
             playersHeroesId.add(hero.getHeroId());
         }
         long count = fightHistory.stream()
                 .filter(fight -> playersHeroesId.contains(fight.getWinner()))
                 .count();
-        System.out.println(count);
-        if(count%5 == 0 && count != 0){
-            player.setToken(player.getToken()+1);
+        if (count % 5 == 0 && count != 0) {
+            player.setToken(player.getToken() + 1);
         }
     }
 
