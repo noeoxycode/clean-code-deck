@@ -1,9 +1,7 @@
 package fr.cleancode.org.server.mongo.mapper;
 
 import fr.cleancode.org.domain.fight.functional.model.Fight;
-import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.server.mongo.entities.FightEntity;
-import fr.cleancode.org.server.mongo.entities.PlayerEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

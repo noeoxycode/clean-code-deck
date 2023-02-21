@@ -1,7 +1,5 @@
 package fr.cleancode.org.server.mongo.entities;
 
-import fr.cleancode.org.domain.hero.functional.model.Rarity;
-import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 import org.springframework.data.annotation.Id;

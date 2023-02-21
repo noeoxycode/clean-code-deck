@@ -6,8 +6,10 @@ import fr.cleancode.org.client.rest.fight.mapper.FightDtoMapper;
 import fr.cleancode.org.domain.fight.port.client.FightApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static fr.cleancode.org.client.rest.fight.mapper.FightDtoMapper.fightCreationToDomain;
 

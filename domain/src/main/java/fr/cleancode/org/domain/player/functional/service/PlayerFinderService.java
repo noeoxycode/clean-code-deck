@@ -1,6 +1,5 @@
 package fr.cleancode.org.domain.player.functional.service;
 
-import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;

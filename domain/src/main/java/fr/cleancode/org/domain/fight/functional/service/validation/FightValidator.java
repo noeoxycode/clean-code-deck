@@ -9,40 +9,41 @@ public interface FightValidator {
 
     static void validate(Player player, Fight fight, Hero attacker, Hero defender) {
         fightParametersChecking(player, fight, attacker, defender);
-        if(!(fight.getDate() != null
+        if (!(fight.getDate() != null
                 && fight.getAttacker() != null
                 && fight.getDefender() != null
-                && fight.getWinner() != null)){
+                && fight.getWinner() != null)) {
             throw new FightException("Bad Fight data");
         }
     }
 
-    static void fightParametersChecking(Player player, Fight fight, Hero attacker, Hero defender){
+    static void fightParametersChecking(Player player, Fight fight, Hero attacker, Hero defender) {
         ownerChecking(player, fight);
         fairMatchupCheck(attacker, defender);
     }
 
     private static void fairMatchupCheck(Hero attacker, Hero defender) {
-        if(attacker.getLevel() > defender.getLevel()){
+        if (attacker.getLevel() > defender.getLevel()) {
             throw new FightException("Fight not allowed : the level differencial is too big");
         }
     }
 
-    private static void ownerChecking(Player attacker, Fight fight){
+    private static void ownerChecking(Player attacker, Fight fight) {
         boolean playerAttacksWithHisMonster = false;
         boolean playerDoesntAttackHisOwnMonster = true;
         for (Hero hero : attacker.getDeck()) {
             if (hero.getHeroId().equals(fight.getAttacker())) {
                 playerAttacksWithHisMonster = true;
             }
-            if(hero.getHeroId().equals(fight.getDefender())){
+            if (hero.getHeroId().equals(fight.getDefender())) {
                 playerDoesntAttackHisOwnMonster = false;
             }
         }
-        if(!playerAttacksWithHisMonster){
+        if (!playerAttacksWithHisMonster) {
             throw new FightException("Fight not allowed : impossible to attack with a hero that you do not own");
-        };
-        if(!playerDoesntAttackHisOwnMonster){
+        }
+        ;
+        if (!playerDoesntAttackHisOwnMonster) {
             throw new FightException("Fight not allowed : impossible to attack a hero that you own");
         }
     }

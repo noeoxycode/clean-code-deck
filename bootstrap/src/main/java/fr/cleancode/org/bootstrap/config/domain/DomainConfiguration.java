@@ -43,5 +43,7 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerCreatorSpi playerCreatorSpi, FightCreatorSpi fightCreatorSpi, FightFinderSpi fightFinderSpi){ return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);}
+    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerCreatorSpi playerCreatorSpi, FightCreatorSpi fightCreatorSpi, FightFinderSpi fightFinderSpi) {
+        return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);
+    }
 }

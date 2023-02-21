@@ -25,10 +25,10 @@ public class HeroFinderService implements HeroFinderApi {
         return spi.findAllHeroes();
     }
 
-    public List<Hero> findAllCarts(){
+    public List<Hero> findAllCarts() {
         List<Player> listPlayers = playerFinderSpi.findAllPlayers();
         List<Hero> heroesList = new ArrayList<>();
-        for(Player player : listPlayers){
+        for (Player player : listPlayers) {
             heroesList.addAll(player.getDeck());
         }
         return heroesList;
