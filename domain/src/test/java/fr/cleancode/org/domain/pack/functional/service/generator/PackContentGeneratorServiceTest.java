@@ -4,7 +4,6 @@ import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Rarity;
 import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
 import fr.cleancode.org.domain.pack.functional.model.Pack;
-import fr.cleancode.org.domain.pack.functional.model.PackType;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

@@ -18,12 +18,12 @@ import static fr.cleancode.org.client.rest.fight.mapper.FightDtoMapper.fightCrea
 @RequestMapping(path = "/fight")
 public class FightRessource {
 
-    private final FightApi fightapi;
+    private final FightApi fightApi;
 
     @PostMapping
     public ResponseEntity<FightDto> fight(@RequestBody FightCreationRequest request) {
         FightDto fightDto = FightDtoMapper
-                .toDto(fightapi
+                .toDto(fightApi
                         .fight(fightCreationToDomain(request), request.player()));
         return ResponseEntity.ok().body(fightDto);
     }

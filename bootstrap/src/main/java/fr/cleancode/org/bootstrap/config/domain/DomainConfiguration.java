@@ -63,11 +63,11 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightApi fightService(HeroFinderApi heroFinderApi,
-                                 PlayerFinderApi playerFinderApi,
+    public FightApi fightService(HeroFinderSpi heroFinderApi,
+                                 PlayerFinderSpi playerFinderApi,
                                  PlayerCreatorSpi playerCreatorSpi,
                                  FightCreatorSpi fightCreatorSpi,
-                                 FightFinderSpi fightFinderSpi){
+                                 FightFinderSpi fightFinderSpi) {
         return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);
     }
 }

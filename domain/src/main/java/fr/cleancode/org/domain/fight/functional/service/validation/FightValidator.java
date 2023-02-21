@@ -8,7 +8,7 @@ import fr.cleancode.org.domain.player.functional.model.Player;
 public interface FightValidator {
 
     static void validate(Player player, Fight fight, Hero attacker, Hero defender) {
-        fightParametersChecking(player, fight, attacker, defender);
+        fightParametersChecker(player, fight, attacker, defender);
         if (!(fight.getDate() != null
                 && fight.getAttacker() != null
                 && fight.getDefender() != null
@@ -17,12 +17,12 @@ public interface FightValidator {
         }
     }
 
-    static void fightParametersChecking(Player player, Fight fight, Hero attacker, Hero defender) {
+    static void fightParametersChecker(Player player, Fight fight, Hero attacker, Hero defender) {
         ownerChecking(player, fight);
-        fairMatchupCheck(attacker, defender);
+        fairMatchupChecker(attacker, defender);
     }
 
-    private static void fairMatchupCheck(Hero attacker, Hero defender) {
+    private static void fairMatchupChecker(Hero attacker, Hero defender) {
         if (attacker.getLevel() > defender.getLevel()) {
             throw new FightException("Fight not allowed : the level differencial is too big");
         }

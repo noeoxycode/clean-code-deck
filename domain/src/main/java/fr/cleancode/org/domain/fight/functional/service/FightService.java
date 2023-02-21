@@ -8,10 +8,10 @@ import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
-import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
+import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.domain.player.ports.client.PlayerFinderApi;
 import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
+import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,9 +23,9 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class FightService implements FightApi {
-    private final HeroFinderApi heroFinderApi;
+    private final HeroFinderSpi heroFinderSpi;
 
-    private final PlayerFinderApi playerFinderApi;
+    private final PlayerFinderSpi playerFinderSpi;
 
     private final PlayerCreatorSpi playerCreatorSpi;
 
@@ -34,15 +34,15 @@ public class FightService implements FightApi {
     private final FightFinderSpi fightFinderSpi;
 
     public Fight fight(Fight fight, UUID playerId) {
-        Optional<Player> player = playerFinderApi.findPlayerById(playerId);
-        Hero attacker = heroFinderApi.findHeroById(fight.getAttacker())
+        Optional<Player> player = playerFinderSpi.findPlayerById(playerId);
+        Hero attacker = heroFinderSpi.findHeroById(fight.getAttacker())
                 .orElseThrow(() -> new FightException("Attacker not found"));
-        Hero defender = heroFinderApi.findHeroById(fight.getDefender())
+        Hero defender = heroFinderSpi.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
         UUID winner = fight(attacker, defender);
         fight.setWinner(winner);
         FightValidator.validate(player.get(), fight, attacker, defender);
-        updatePlayerAndHero(player.get(), fight, attacker, winner);
+        updatePlayerAndHeroAfterFightWon(player.get(), fight, attacker, winner);
         fightCreatorSpi.save(fight);
         return fight;
     }
@@ -78,17 +78,16 @@ public class FightService implements FightApi {
         defender.setHealthPoints(defender.getHealthPoints() - (attacker.getPower() - defender.getArmor()));
     }
 
-    private void updatePlayerAndHero(Player player, Fight fight, Hero attacker, UUID winner) {
+    private void updatePlayerAndHeroAfterFightWon(Player player, Fight fight, Hero attacker, UUID winner) {
         if (winner.equals(attacker.getHeroId())) {
-            updateHero(attacker);
-            updatePlayerDeck(player, attacker);
-            ArrayList<UUID>newHistoFights = new ArrayList<>();
+            updateHeroStatisticsAfterWin(attacker);
+            updateHeroInDeck(player, attacker);
+            ArrayList<UUID> newHistoFights = new ArrayList<>();
             if (player.getFight() != null) {
                 newHistoFights = new ArrayList<>(player.getFight());
                 newHistoFights.add(fight.getFightId());
                 player.setFight(newHistoFights);
-            }
-            else {
+            } else {
                 newHistoFights.add(fight.getFightId());
                 player.setFight(newHistoFights);
             }
@@ -97,7 +96,7 @@ public class FightService implements FightApi {
         playerCreatorSpi.save(player);
     }
 
-    private void updateHero(Hero hero) {
+    private void updateHeroStatisticsAfterWin(Hero hero) {
         if (hero.getCurrentExperiences() >= 4) {
             hero.setCurrentExperiences(0);
             hero.setLevel(hero.getLevel() + 1);
@@ -109,7 +108,7 @@ public class FightService implements FightApi {
         }
     }
 
-    private void updatePlayerDeck(Player player, Hero updatedHero) {
+    private void updateHeroInDeck(Player player, Hero updatedHero) {
         ArrayList<Hero> deck = player.getDeck();
         int index = -1;
         for (int i = 0; i < deck.size(); i++) {

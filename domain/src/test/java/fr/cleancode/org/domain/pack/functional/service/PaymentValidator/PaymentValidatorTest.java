@@ -2,10 +2,10 @@ package fr.cleancode.org.domain.pack.functional.service.PaymentValidator;
 
 import fr.cleancode.org.domain.pack.functional.service.validation.PaymentValidator;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import lombok.val;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PaymentValidatorTest {
 

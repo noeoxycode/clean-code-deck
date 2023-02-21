@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
