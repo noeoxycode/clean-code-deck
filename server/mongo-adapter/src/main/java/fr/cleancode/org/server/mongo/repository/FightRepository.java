@@ -9,6 +9,4 @@ import java.util.UUID;
 
 @Repository
 public interface FightRepository extends MongoRepository<FightEntity, UUID> {
-
-    FightEntity findFightEntitiesByFightId(UUID fightId);
 }
