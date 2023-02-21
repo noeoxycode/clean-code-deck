@@ -6,7 +6,7 @@ import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -16,9 +16,7 @@ public class PlayerFinderService implements PlayerFinderApi {
     private final PlayerFinderSpi spi;
 
     @Override
-    public Player findPlayerById(UUID playerId) {
+    public Optional<Player> findPlayerById(UUID playerId) {
         return spi.findPlayerById(playerId);
     }
-
-    public List<Player> findAllPlayers(){return spi.findAllPlayers();}
 }

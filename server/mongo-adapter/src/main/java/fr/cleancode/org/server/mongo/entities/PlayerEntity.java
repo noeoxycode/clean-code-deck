@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode.Include;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +23,5 @@ public class PlayerEntity {
     private UUID playerId;
     private String pseudo;
     private int token;
-    private List<Hero> deck;
-    private List<UUID> fight;
+    private ArrayList<Hero> deck;
 }

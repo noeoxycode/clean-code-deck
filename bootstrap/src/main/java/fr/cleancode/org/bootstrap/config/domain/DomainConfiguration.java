@@ -1,15 +1,15 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
-import fr.cleancode.org.domain.fight.functional.service.FightService;
-import fr.cleancode.org.domain.fight.port.client.FightApi;
-import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
-import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.service.HeroCreatorService;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
+import fr.cleancode.org.domain.pack.functional.service.OpenPackService;
+import fr.cleancode.org.domain.pack.functional.service.PackContentService;
+import fr.cleancode.org.domain.pack.functional.service.generator.PackContentGeneratorService;
+import fr.cleancode.org.domain.pack.ports.client.OpenPackApi;
 import fr.cleancode.org.domain.player.functional.service.PlayerCreatorService;
 import fr.cleancode.org.domain.player.functional.service.PlayerFinderService;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
@@ -28,8 +28,8 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public HeroFinderApi heroFinderService(HeroFinderSpi spi, PlayerFinderSpi playerFinderSpi) {
-        return new HeroFinderService(spi, playerFinderSpi);
+    public HeroFinderApi heroFinderService(HeroFinderSpi spi) {
+        return new HeroFinderService(spi);
     }
 
     @Bean
@@ -43,7 +43,18 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightApi fightService(HeroFinderApi heroFinderApi, PlayerFinderApi playerFinderApi, PlayerCreatorSpi playerCreatorSpi, FightCreatorSpi fightCreatorSpi, FightFinderSpi fightFinderSpi) {
-        return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);
+    public OpenPackApi openPackService(
+            PlayerFinderSpi playerFinderSpi,
+            PlayerCreatorSpi playerCreatorSpi,
+            HeroFinderSpi heroFinderSpi
+    ) {
+        PackContentGeneratorService packContentGeneratorService =
+                new PackContentGeneratorService(heroFinderSpi);
+        PackContentService packContentService =
+                new PackContentService(packContentGeneratorService);
+
+        return new OpenPackService(playerFinderSpi,
+                playerCreatorSpi,
+                packContentService);
     }
 }

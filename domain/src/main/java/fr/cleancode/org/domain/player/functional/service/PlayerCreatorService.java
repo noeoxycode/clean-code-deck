@@ -15,7 +15,7 @@ public class PlayerCreatorService implements PlayerCreatorApi {
     private final PlayerCreatorSpi spi;
 
     @Override
-    public Player create(Player player) {
+    public Player save(Player player) {
         if (!PlayerValidator.validate(player)) {
             throw new PlayerException("Unable to validate the player");
         }

@@ -8,6 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface PlayerRepository extends MongoRepository<PlayerEntity, UUID> {
-
-    PlayerEntity findPlayerEntitiesByPlayerId(UUID playerId);
 }

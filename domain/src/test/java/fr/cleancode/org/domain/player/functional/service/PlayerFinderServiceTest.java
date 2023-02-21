@@ -9,7 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,12 +28,12 @@ class PlayerFinderServiceTest {
     @Test
     void should_find_player_with_id() {
         val given = UUID.randomUUID();
-        val player = Player.builder()
+        val player = Optional.of(Player.builder()
                 .playerId(given)
                 .pseudo("sacha")
-                .deck(List.of())
+                .deck(new ArrayList<>())
                 .token(4)
-                .build();
+                .build());
 
         when(spi.findPlayerById(given)).thenReturn(player);
 
@@ -49,11 +50,11 @@ class PlayerFinderServiceTest {
     void should_not_find_player_with_id() {
         val given = UUID.randomUUID();
 
-        when(spi.findPlayerById(given)).thenReturn(null);
+        when(spi.findPlayerById(given)).thenReturn(Optional.empty());
 
         final var actual = service.findPlayerById(given);
 
-        assertThat(actual).isNull();
+        assertThat(actual).isEmpty();
         verify(spi).findPlayerById(given);
         verifyNoMoreInteractions(spi);
     }

@@ -22,7 +22,7 @@ public class HeroDatabaseAdapter implements HeroCreatorSpi, HeroFinderSpi {
     private final HeroRepository heroRepository;
 
     @Override
-    public Hero create(Hero hero) {
+    public Hero save(Hero hero) {
         val entity = HeroEntityMapper.fromDomain(hero);
         heroRepository.save(entity);
         return HeroEntityMapper.toDomain(entity);

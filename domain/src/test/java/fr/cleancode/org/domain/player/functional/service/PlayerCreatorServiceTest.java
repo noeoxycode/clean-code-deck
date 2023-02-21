@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,13 +31,13 @@ class PlayerCreatorServiceTest {
         val given = Player.builder()
                 .playerId(UUID.randomUUID())
                 .pseudo("Sacha")
-                .deck(List.of())
+                .deck(new ArrayList<>())
                 .token(4)
                 .build();
 
         when(spi.save(given)).thenReturn(given);
 
-        val actual = service.create(given);
+        val actual = service.save(given);
 
         assertThat(actual)
                 .usingRecursiveComparison()
@@ -55,7 +55,7 @@ class PlayerCreatorServiceTest {
 
         assertThatExceptionOfType(PlayerException.class)
                 .isThrownBy(() ->
-                        service.create(given));
+                        service.save(given));
         verifyNoInteractions(spi);
     }
 }

@@ -49,7 +49,7 @@ class HeroDatabaseAdapterTest {
                     .save(any(HeroEntity.class)))
                     .thenReturn(entity);
 
-            val actual = heroDatabaseAdapter.create(hero);
+            val actual = heroDatabaseAdapter.save(hero);
 
             verify(heroRepository)
                     .save(entityArgumentCaptor
@@ -75,7 +75,7 @@ class HeroDatabaseAdapterTest {
             when(heroRepository.save(entity)).thenThrow(throwable);
 
             assertThatExceptionOfType(IllegalArgumentException.class)
-                    .isThrownBy(() -> heroDatabaseAdapter.create(hero));
+                    .isThrownBy(() -> heroDatabaseAdapter.save(hero));
             verify(heroRepository)
                     .save(entityArgumentCaptor
                             .capture());
