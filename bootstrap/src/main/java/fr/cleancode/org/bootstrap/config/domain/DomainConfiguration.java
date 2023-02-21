@@ -1,5 +1,9 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
+import fr.cleancode.org.domain.fight.functional.service.FightService;
+import fr.cleancode.org.domain.fight.port.client.FightApi;
+import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
+import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.service.HeroCreatorService;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
@@ -28,8 +32,8 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public HeroFinderApi heroFinderService(HeroFinderSpi spi) {
-        return new HeroFinderService(spi);
+    public HeroFinderApi heroFinderService(HeroFinderSpi heroFinderSpi, PlayerFinderSpi playerFinderSpi) {
+        return new HeroFinderService(heroFinderSpi, playerFinderSpi);
     }
 
     @Bean
@@ -56,5 +60,14 @@ public class DomainConfiguration {
         return new OpenPackService(playerFinderSpi,
                 playerCreatorSpi,
                 packContentService);
+    }
+
+    @Bean
+    public FightApi fightService(HeroFinderApi heroFinderApi,
+                                 PlayerFinderApi playerFinderApi,
+                                 PlayerCreatorSpi playerCreatorSpi,
+                                 FightCreatorSpi fightCreatorSpi,
+                                 FightFinderSpi fightFinderSpi){
+        return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);
     }
 }

@@ -17,12 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 public class FightService implements FightApi {
-
     private final HeroFinderApi heroFinderApi;
 
     private final PlayerFinderApi playerFinderApi;
@@ -34,15 +34,15 @@ public class FightService implements FightApi {
     private final FightFinderSpi fightFinderSpi;
 
     public Fight fight(Fight fight, UUID playerId) {
-        Player player = playerFinderApi.findPlayerById(playerId);
+        Optional<Player> player = playerFinderApi.findPlayerById(playerId);
         Hero attacker = heroFinderApi.findHeroById(fight.getAttacker())
                 .orElseThrow(() -> new FightException("Attacker not found"));
         Hero defender = heroFinderApi.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
         UUID winner = fight(attacker, defender);
         fight.setWinner(winner);
-        FightValidator.validate(player, fight, attacker, defender);
-        updatePlayerAndHero(player, fight, attacker, winner);
+        FightValidator.validate(player.get(), fight, attacker, defender);
+        updatePlayerAndHero(player.get(), fight, attacker, winner);
         fightCreatorSpi.save(fight);
         return fight;
     }
@@ -82,10 +82,15 @@ public class FightService implements FightApi {
         if (winner.equals(attacker.getHeroId())) {
             updateHero(attacker);
             updatePlayerDeck(player, attacker);
-            if (player.getFights() != null) {
-                List<UUID> newHistoFights = new ArrayList<>(player.getFights());
+            ArrayList<UUID>newHistoFights = new ArrayList<>();
+            if (player.getFight() != null) {
+                newHistoFights = new ArrayList<>(player.getFight());
                 newHistoFights.add(fight.getFightId());
-                player.setFights(newHistoFights);
+                player.setFight(newHistoFights);
+            }
+            else {
+                newHistoFights.add(fight.getFightId());
+                player.setFight(newHistoFights);
             }
             earningToken(player);
         }
@@ -105,7 +110,7 @@ public class FightService implements FightApi {
     }
 
     private void updatePlayerDeck(Player player, Hero updatedHero) {
-        List<Hero> deck = player.getDeck();
+        ArrayList<Hero> deck = player.getDeck();
         int index = -1;
         for (int i = 0; i < deck.size(); i++) {
             if (deck.get(i).getHeroId().equals(updatedHero.getHeroId())) {

@@ -6,6 +6,7 @@ import lombok.Builder.Default;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -19,4 +20,6 @@ public class Player {
     int token = 4;
     @Default
     ArrayList<Hero> deck = new ArrayList<>();
+    @Default
+    ArrayList<UUID> fight = new ArrayList<>();
 }

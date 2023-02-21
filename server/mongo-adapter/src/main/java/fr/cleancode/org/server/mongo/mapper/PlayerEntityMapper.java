@@ -14,7 +14,7 @@ public interface PlayerEntityMapper {
                 .pseudo(entity.getPseudo())
                 .token(entity.getToken())
                 .deck(entity.getDeck())
-                .fights(entity.getFight())
+                .fight(entity.getFight())
                 .build();
     }
 
@@ -24,7 +24,7 @@ public interface PlayerEntityMapper {
                 .pseudo(domain.getPseudo())
                 .token(domain.getToken())
                 .deck(domain.getDeck())
-                .fight(domain.getFights())
+                .fight(domain.getFight())
                 .build();
     }
 
