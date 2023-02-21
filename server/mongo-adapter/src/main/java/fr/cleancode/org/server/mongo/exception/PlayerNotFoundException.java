@@ -1,4 +1,4 @@
-package fr.cleancode.org.domain.player.functional.exception;
+package fr.cleancode.org.server.mongo.exception;
 
 public class PlayerNotFoundException extends RuntimeException {
 

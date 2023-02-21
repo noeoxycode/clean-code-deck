@@ -4,7 +4,7 @@ import fr.cleancode.org.domain.player.functional.model.Player;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +16,7 @@ class PlayerValidatorTest {
         val given = Player.builder()
                 .playerId(UUID.randomUUID())
                 .pseudo("sacha")
-                .deck(List.of())
+                .deck(new ArrayList<>())
                 .build();
 
         val actual = PlayerValidator.validate(given);

@@ -1,8 +1,8 @@
 package fr.cleancode.org.server.mongo.adapter;
 
-import fr.cleancode.org.domain.player.functional.exception.PlayerNotFoundException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.server.mongo.entities.PlayerEntity;
+import fr.cleancode.org.server.mongo.exception.PlayerNotFoundException;
 import fr.cleancode.org.server.mongo.mapper.PlayerEntityMapper;
 import fr.cleancode.org.server.mongo.repository.PlayerRepository;
 import lombok.val;
