@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ class PlayerFinderServiceTest {
         val player = Optional.of(Player.builder()
                 .playerId(given)
                 .pseudo("sacha")
-                .deck(List.of())
+                .deck(new ArrayList<>())
                 .token(4)
                 .build());
 

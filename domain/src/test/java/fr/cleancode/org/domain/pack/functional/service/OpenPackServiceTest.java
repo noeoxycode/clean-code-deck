@@ -1,6 +1,7 @@
 package fr.cleancode.org.domain.pack.functional.service;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
+import fr.cleancode.org.domain.pack.functional.exception.PaymentException;
 import fr.cleancode.org.domain.pack.functional.model.Pack;
 import fr.cleancode.org.domain.pack.functional.model.PackType;
 import fr.cleancode.org.domain.player.functional.model.Player;
@@ -115,7 +116,7 @@ class OpenPackServiceTest {
                 Hero.builder().build(),
                 Hero.builder().build()
         );
-        val throwable = new IllegalArgumentException();
+        val throwable = new PaymentException("Not enough amount of money");
 
         when(playerFinderSpi.findPlayerById(id))
                 .thenReturn(Optional.ofNullable(player));
@@ -125,7 +126,7 @@ class OpenPackServiceTest {
         when(playerCreatorSpi.save(any(Player.class)))
                 .thenThrow(throwable);
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(PaymentException.class)
                 .isThrownBy(() -> openPackService.openPack(id, packType));
 
         verify(playerFinderSpi).findPlayerById(id);

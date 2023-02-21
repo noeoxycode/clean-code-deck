@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Builder
@@ -18,5 +18,5 @@ public class Player {
     @Default
     int token = 4;
     @Default
-    List<Hero> deck = List.of();
+    ArrayList<Hero> deck = new ArrayList<>();
 }
