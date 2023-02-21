@@ -5,6 +5,7 @@ import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
 import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
+import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
@@ -30,15 +31,17 @@ public class FightService implements FightApi {
 
     private final FightCreatorSpi fightCreatorSpi;
 
+    private final FightFinderSpi fightFinderSpi;
+
     public Fight fight(Fight fight, UUID playerId) {
         Player player = playerFinderApi.findPlayerById(playerId);
         Hero attacker = heroFinderApi.findHeroById(fight.getAttacker())
                 .orElseThrow(() -> new FightException("Attacker not found"));
         Hero defender = heroFinderApi.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
-        FightValidator.validate(player, fight, attacker, defender);
         UUID winner = fight(attacker, defender);
         fight.setWinner(winner);
+        FightValidator.validate(player, fight, attacker, defender);
         updatePlayerAndHero(player, fight, attacker, winner);
         fightCreatorSpi.save(fight);
         return fight;
@@ -84,6 +87,7 @@ public class FightService implements FightApi {
                 newHistoFights.add(fight.getFightId());
                 player.setFights(newHistoFights);
             }
+            earningToken(player);
         }
         playerCreatorSpi.save(player);
     }
@@ -115,4 +119,20 @@ public class FightService implements FightApi {
             player.setDeck(deck);
         }
     }
+
+    private void earningToken(Player player){
+        List<Fight> fightHistory = fightFinderSpi.findAllFights();
+        List<UUID> playersHeroesId = new ArrayList<>();
+        for(Hero hero : player.getDeck()){
+            playersHeroesId.add(hero.getHeroId());
+        }
+        long count = fightHistory.stream()
+                .filter(fight -> playersHeroesId.contains(fight.getWinner()))
+                .count();
+        System.out.println(count);
+        if(count%5 == 0 && count != 0){
+            player.setToken(player.getToken()+1);
+        }
+    }
+
 }

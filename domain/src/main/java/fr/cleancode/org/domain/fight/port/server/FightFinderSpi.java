@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface FightFinderSpi {
 
-    //List<Fight> findAllFights();
+    List<Fight> findAllFights();
 }

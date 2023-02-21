@@ -25,9 +25,9 @@ public class FightDatabaseAdapter implements FightFinderSpi, FightCreatorSpi {
         return FightEntityMapper.toDomain(entity);
     }
 
-    /*@Override
+    @Override
     public List<Fight> findAllFights() {
         return FightEntityMapper.toDomainList(fightRepository.findAll());
-    }*/
+    }
 
 }
