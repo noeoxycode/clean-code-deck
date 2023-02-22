@@ -9,7 +9,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 @JsonAutoDetect(fieldVisibility = ANY)
 public record FightDto(
-        LocalDate localDate,
+        LocalDate fightDate,
         UUID attacker,
         UUID defender,
         UUID winner

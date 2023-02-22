@@ -4,48 +4,67 @@ import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.player.functional.model.Player;
+import lombok.extern.java.Log;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public interface FightValidator {
 
-    static void validate(Player player, Fight fight, Hero attacker, Hero defender) {
-        fightParametersChecker(player, fight, attacker, defender);
-        if (!(fight.getDate() != null
+    Logger logger
+            = Logger.getLogger(
+            FightValidator.class.getName());
+
+    static boolean validate(Player player, Fight fight, Hero attacker, Hero defender) {
+        if (fight.getFightDate() != null
                 && fight.getAttacker() != null
                 && fight.getDefender() != null
-                && fight.getWinner() != null)) {
-            throw new FightException("Bad Fight data");
+                && fight.getWinner() != null) {
+            return (fightParametersChecker(player, fight, attacker, defender));
+        }
+        else {
+            return false;
         }
     }
 
-    static void fightParametersChecker(Player player, Fight fight, Hero attacker, Hero defender) {
-        ownerChecking(player, fight);
-        fairMatchupChecker(attacker, defender);
+    private static boolean fightParametersChecker(Player player, Fight fight, Hero attacker, Hero defender) {
+        if(heroesOwnerValidChecker(player, fight)){
+            return fairMatchupChecker(attacker, defender);
+        }
+        else {
+            logger.log(Level.INFO,"Fight not allowed : owner issue");
+            return false;
+        }
     }
 
-    private static void fairMatchupChecker(Hero attacker, Hero defender) {
+    private static boolean fairMatchupChecker(Hero attacker, Hero defender) {
         if (attacker.getLevel() > defender.getLevel()) {
-            throw new FightException("Fight not allowed : the level differencial is too big");
+            logger.log(Level.INFO,"Fight not allowed : the level differencial is too big");
+            return false;
         }
+        return true;
     }
 
-    private static void ownerChecking(Player attacker, Fight fight) {
+    private static boolean heroesOwnerValidChecker(Player attacker, Fight fight) {
         boolean playerAttacksWithHisMonster = false;
-        boolean playerDoesntAttackHisOwnMonster = true;
+        boolean playerAttackerHisOwnMonster = true;
         for (Hero hero : attacker.getDeck()) {
             if (hero.getHeroId().equals(fight.getAttacker())) {
                 playerAttacksWithHisMonster = true;
             }
             if (hero.getHeroId().equals(fight.getDefender())) {
-                playerDoesntAttackHisOwnMonster = false;
+                playerAttackerHisOwnMonster = false;
             }
         }
         if (!playerAttacksWithHisMonster) {
-            throw new FightException("Fight not allowed : impossible to attack with a hero that you do not own");
+            logger.log(Level.INFO,"Fight not allowed : impossible to attack with a hero that you do not own");
+            return false;
         }
-        ;
-        if (!playerDoesntAttackHisOwnMonster) {
-            throw new FightException("Fight not allowed : impossible to attack a hero that you own");
+        if (playerAttackerHisOwnMonster) {
+            logger.log(Level.INFO,"Fight not allowed : impossible to attack a hero that you own");
+            return false;
         }
+        return true;
     }
 
 }

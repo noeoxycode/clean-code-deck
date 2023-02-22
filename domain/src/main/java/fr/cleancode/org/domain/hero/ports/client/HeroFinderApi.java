@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface HeroFinderApi {
     List<Hero> findAllHeroes();
 
-    List<Hero> findAllCarts();
+    List<Hero> findAllOwnedHeroes();
 
     Optional<Hero> findHeroById(UUID id);
 }

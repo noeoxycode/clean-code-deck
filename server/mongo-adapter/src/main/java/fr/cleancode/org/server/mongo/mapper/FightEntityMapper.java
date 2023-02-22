@@ -11,7 +11,7 @@ public interface FightEntityMapper {
     static Fight toDomain(FightEntity entity) {
         return Fight.builder()
                 .fightId(entity.getFightId())
-                .date(entity.getDate())
+                .fightDate(entity.getDate())
                 .attacker(entity.getAttacker())
                 .defender(entity.getDefender())
                 .winner(entity.getWinner())
@@ -21,7 +21,7 @@ public interface FightEntityMapper {
     static FightEntity fromDomain(Fight domain) {
         return FightEntity.builder()
                 .fightId(domain.getFightId())
-                .date(domain.getDate())
+                .date(domain.getFightDate())
                 .attacker(domain.getAttacker())
                 .defender(domain.getDefender())
                 .winner(domain.getWinner())

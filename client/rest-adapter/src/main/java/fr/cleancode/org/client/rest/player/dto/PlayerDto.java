@@ -14,6 +14,6 @@ public record PlayerDto(
         String pseudo,
         int token,
         ArrayList<Hero> deck,
-        ArrayList<UUID> fight
+        ArrayList<UUID> fights
 ) {
 }

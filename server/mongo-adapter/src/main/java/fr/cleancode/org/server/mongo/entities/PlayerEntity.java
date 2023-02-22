@@ -24,5 +24,5 @@ public class PlayerEntity {
     private String pseudo;
     private int token;
     private ArrayList<Hero> deck;
-    private ArrayList<UUID> fight;
+    private ArrayList<UUID> fights;
 }

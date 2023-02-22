@@ -1,6 +1,7 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
 import fr.cleancode.org.domain.fight.functional.service.FightService;
+import fr.cleancode.org.domain.fight.functional.service.FightUtilsService;
 import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
@@ -14,6 +15,7 @@ import fr.cleancode.org.domain.pack.functional.service.OpenPackService;
 import fr.cleancode.org.domain.pack.functional.service.PackContentService;
 import fr.cleancode.org.domain.pack.functional.service.generator.PackContentGeneratorService;
 import fr.cleancode.org.domain.pack.ports.client.OpenPackApi;
+import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.functional.service.PlayerCreatorService;
 import fr.cleancode.org.domain.player.functional.service.PlayerFinderService;
 import fr.cleancode.org.domain.player.ports.client.PlayerCreatorApi;
@@ -63,11 +65,13 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightApi fightService(HeroFinderSpi heroFinderApi,
-                                 PlayerFinderSpi playerFinderApi,
-                                 PlayerCreatorSpi playerCreatorSpi,
+    public FightApi fightService(PlayerFinderSpi playerFinderApi,
                                  FightCreatorSpi fightCreatorSpi,
-                                 FightFinderSpi fightFinderSpi) {
-        return new FightService(heroFinderApi, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightFinderSpi);
+                                 PlayerCreatorSpi playerCreatorSpi,
+                                 FightFinderSpi fightFinderSpi,
+                                 HeroFinderSpi heroFinderSpi) {
+        HeroFinderService heroFinderService = new HeroFinderService(heroFinderSpi, playerFinderApi);
+        FightUtilsService fightUtilsService = new FightUtilsService(playerCreatorSpi, fightFinderSpi);
+        return new FightService(heroFinderService, playerFinderApi, fightCreatorSpi, fightUtilsService);
     }
 }

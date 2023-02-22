@@ -17,7 +17,7 @@ public class Fight {
     UUID fightId = UUID.randomUUID();
 
     @Default
-    LocalDate date = LocalDate.now();
+    LocalDate fightDate = LocalDate.now();
 
     UUID attacker;
 

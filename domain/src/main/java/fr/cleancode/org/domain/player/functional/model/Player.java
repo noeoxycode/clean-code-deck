@@ -20,5 +20,5 @@ public class Player {
     @Default
     ArrayList<Hero> deck = new ArrayList<>();
     @Default
-    ArrayList<UUID> fight = new ArrayList<>();
+    ArrayList<UUID> fights = new ArrayList<>();
 }

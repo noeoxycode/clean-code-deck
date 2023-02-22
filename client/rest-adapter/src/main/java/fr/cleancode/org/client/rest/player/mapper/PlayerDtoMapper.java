@@ -12,7 +12,7 @@ public interface PlayerDtoMapper {
                 player.getPseudo(),
                 player.getToken(),
                 player.getDeck(),
-                player.getFight()
+                player.getFights()
         );
     }
 

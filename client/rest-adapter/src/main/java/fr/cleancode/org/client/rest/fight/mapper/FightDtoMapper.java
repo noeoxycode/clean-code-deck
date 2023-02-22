@@ -16,7 +16,7 @@ public class FightDtoMapper {
 
     public static FightDto toDto(Fight fight) {
         return new FightDto(
-                fight.getDate(),
+                fight.getFightDate(),
                 fight.getAttacker(),
                 fight.getDefender(),
                 fight.getWinner()

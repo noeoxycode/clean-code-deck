@@ -25,7 +25,7 @@ public class HeroFinderService implements HeroFinderApi {
         return spi.findAllHeroes();
     }
 
-    public List<Hero> findAllCarts() {
+    public List<Hero> findAllOwnedHeroes() {
         List<Player> listPlayers = playerFinderSpi.findAllPlayers();
         List<Hero> heroesList = new ArrayList<>();
         for (Player player : listPlayers) {
@@ -35,7 +35,7 @@ public class HeroFinderService implements HeroFinderApi {
     }
 
     public Optional<Hero> findHeroById(UUID heroId) {
-        List<Hero> listHeroes = findAllCarts();
+        List<Hero> listHeroes = findAllOwnedHeroes();
         for (Hero hero : listHeroes) {
             if (hero.getHeroId().equals(heroId)) {
                 return Optional.of(hero);
