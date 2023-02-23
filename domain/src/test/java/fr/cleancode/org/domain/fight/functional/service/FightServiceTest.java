@@ -54,4 +54,33 @@ class FightServiceTest {
         verify(fightUtilsService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
         verify(fightCreatorSpi, never()).save(any(Fight.class));
     }
+
+    @Test
+    void testFight_HeroNotFound() {
+        UUID heroId = UUID.randomUUID();
+        UUID playerId = UUID.randomUUID();
+
+        HeroFinderService heroFinderService = mock(HeroFinderService.class);
+        PlayerFinderSpi playerFinderSpi = mock(PlayerFinderSpi.class);
+        FightCreatorSpi fightCreatorSpi = mock(FightCreatorSpi.class);
+        FightUtilsService fightUtilsService = mock(FightUtilsService.class);
+
+        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightUtilsService);
+        Fight fight = Fight.builder()
+                .attacker(heroId)
+                .build();
+
+        Player player = Player.builder().build();
+
+        when(playerFinderSpi.findPlayerById(playerId)).thenReturn(Optional.of(player));
+        when(heroFinderService.findHeroById(heroId)).thenReturn(Optional.empty());
+
+        FightException ex = assertThrows(FightException.class, () -> fightService.fight(fight, playerId));
+        assertEquals("Attacker not found", ex.getMessage());
+
+        verify(heroFinderService, times(1)).findHeroById(heroId);
+        verify(fightUtilsService, never()).fight(any(Hero.class), any(Hero.class));
+        verify(fightUtilsService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
+        verify(fightCreatorSpi, never()).save(any(Fight.class));
+    }
 }
