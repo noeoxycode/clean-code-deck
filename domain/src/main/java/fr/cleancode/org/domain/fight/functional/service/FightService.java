@@ -29,21 +29,19 @@ public class FightService implements FightApi {
 
     public Fight fight(Fight fight, UUID playerId) {
         Player player = playerFinderSpi.findPlayerById(playerId)
-                .orElseThrow(() -> new PlayerException("Player not found"));;
+                .orElseThrow(() -> new PlayerException("Player not found"));
         Hero attacker = heroFinderService.findHeroById(fight.getAttacker())
                 .orElseThrow(() -> new FightException("Attacker not found"));
         Hero defender = heroFinderService.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
         UUID winner = fightUtilsService.fight(attacker, defender);
         fight.setWinner(winner);
-        if(FightValidator.validate(player, fight, attacker, defender)){
-            fightUtilsService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
-            fightCreatorSpi.save(fight);
-            return fight;
-        }
-        else {
+        if(!FightValidator.validate(player, fight, attacker, defender)){
             throw new FightException("Fight not valid");
         }
+        fightUtilsService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
+        fightCreatorSpi.save(fight);
+        return fight;
     }
 
 }
