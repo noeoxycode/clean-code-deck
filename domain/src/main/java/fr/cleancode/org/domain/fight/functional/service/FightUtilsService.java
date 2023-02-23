@@ -97,7 +97,7 @@ public class FightUtilsService {
         }
     }
 
-    void earningToken(Player player) {
+    private void earningToken(Player player) {
         List<Fight> fightHistory = fightFinderSpi.findAllFights();
         List<UUID> playersHeroesId = new ArrayList<>();
         for (Hero hero : player.getDeck()) {
