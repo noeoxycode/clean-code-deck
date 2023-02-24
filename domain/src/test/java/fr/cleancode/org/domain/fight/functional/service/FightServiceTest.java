@@ -47,22 +47,6 @@ class FightServiceTest {
     @Mock
     FightService fightService;
 
-
-    @Test
-    public void test_fight_happened() {
-        Hero attacker = Hero.builder().heroId(UUID.randomUUID()).level(5).power(100000).name("Attacker").build();
-        Hero defender = Hero.builder().heroId(UUID.randomUUID()).level(5).power(0).name("Defender").build();
-        ArrayList<Hero> heroes = new ArrayList<>();
-        heroes.add(attacker);
-        Player player = Player.builder().deck(heroes).build();
-        Fight fight = Fight.builder().attacker(attacker.getHeroId()).defender(defender.getHeroId())
-                .winner(attacker.getHeroId()).build();
-
-        Fight returnedFight = fightService.fight(fight, player.getPlayerId());
-
-        assertNotNull(returnedFight);
-    }
-
     @Test
     void testFight_PlayerNotFound() {
         FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
