@@ -60,7 +60,7 @@ public interface FightValidator {
             logger.log(Level.INFO,"Fight not allowed : impossible to attack with a hero that you do not own");
             return false;
         }
-        if (playerAttackerHisOwnMonster) {
+        if (!playerAttackerHisOwnMonster) {
             logger.log(Level.INFO,"Fight not allowed : impossible to attack a hero that you own");
             return false;
         }
