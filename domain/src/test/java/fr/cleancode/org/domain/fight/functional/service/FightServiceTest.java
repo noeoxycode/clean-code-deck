@@ -7,14 +7,11 @@ import java.util.UUID;
 
 import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
-import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
-import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,13 +33,19 @@ class FightServiceTest {
     FightCreatorSpi fightCreatorSpi;
 
     @Mock
-    FightUtilsService fightUtilsService;
+    FightActionsService fightUtilsService;
+
+    @Mock
+    FightActionsService fightActionsService;
+
+    @Mock
+    UpdateAfterFightService updateAfterFightService;
 
 
 
     @Test
     void testFight_PlayerNotFound() {
-        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightUtilsService);
+        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
         Fight fight = Fight.builder().build();
         UUID playerId = UUID.randomUUID();
 
@@ -51,7 +54,7 @@ class FightServiceTest {
         assertThrows(PlayerException.class, () -> fightService.fight(fight, playerId));
         verify(heroFinderService, never()).findHeroById(any(UUID.class));
         verify(fightUtilsService, never()).fight(any(Hero.class), any(Hero.class));
-        verify(fightUtilsService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
+        verify(updateAfterFightService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
         verify(fightCreatorSpi, never()).save(any(Fight.class));
     }
 
@@ -60,12 +63,7 @@ class FightServiceTest {
         UUID heroId = UUID.randomUUID();
         UUID playerId = UUID.randomUUID();
 
-        HeroFinderService heroFinderService = mock(HeroFinderService.class);
-        PlayerFinderSpi playerFinderSpi = mock(PlayerFinderSpi.class);
-        FightCreatorSpi fightCreatorSpi = mock(FightCreatorSpi.class);
-        FightUtilsService fightUtilsService = mock(FightUtilsService.class);
-
-        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightUtilsService);
+        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
         Fight fight = Fight.builder()
                 .attacker(heroId)
                 .build();
@@ -80,7 +78,12 @@ class FightServiceTest {
 
         verify(heroFinderService, times(1)).findHeroById(heroId);
         verify(fightUtilsService, never()).fight(any(Hero.class), any(Hero.class));
-        verify(fightUtilsService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
+        verify(updateAfterFightService, never())
+                .updatePlayerAndHeroAfterFightWon(
+                        any(Player.class),
+                        any(Fight.class),
+                        any(Hero.class),
+                        any(UUID.class));
         verify(fightCreatorSpi, never()).save(any(Fight.class));
     }
 }

@@ -1,6 +1,6 @@
 package fr.cleancode.org.domain.pack.functional.service.PaymentValidator;
 
-import fr.cleancode.org.domain.pack.functional.service.validation.PaymentValidator;
+import fr.cleancode.org.domain.money.validation.PaymentValidator;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import org.junit.jupiter.api.Test;
 
