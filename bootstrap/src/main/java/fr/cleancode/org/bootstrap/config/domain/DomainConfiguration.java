@@ -2,6 +2,7 @@ package fr.cleancode.org.bootstrap.config.domain;
 
 import fr.cleancode.org.domain.fight.functional.service.FightService;
 import fr.cleancode.org.domain.fight.functional.service.FightActionsService;
+import fr.cleancode.org.domain.fight.functional.service.UpdateAfterFightService;
 import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
@@ -11,6 +12,7 @@ import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
+import fr.cleancode.org.domain.money.EarningTokenService;
 import fr.cleancode.org.domain.pack.functional.service.OpenPackService;
 import fr.cleancode.org.domain.pack.functional.service.PackContentService;
 import fr.cleancode.org.domain.pack.functional.service.generator.PackContentGeneratorService;
@@ -71,6 +73,8 @@ public class DomainConfiguration {
                                  HeroFinderSpi heroFinderSpi) {
         HeroFinderService heroFinderService = new HeroFinderService(heroFinderSpi, playerFinderApi);
         FightActionsService fightUtilsService = new FightActionsService(playerCreatorSpi, fightFinderSpi);
-        return new FightService(heroFinderService, playerFinderApi, fightCreatorSpi, fightUtilsService);
+        EarningTokenService earningTokenService = new EarningTokenService(fightFinderSpi);
+        UpdateAfterFightService updateAfterFightService = new UpdateAfterFightService(playerCreatorSpi, earningTokenService);
+        return new FightService(heroFinderService, playerFinderApi, fightCreatorSpi, fightUtilsService, updateAfterFightService);
     }
 }
