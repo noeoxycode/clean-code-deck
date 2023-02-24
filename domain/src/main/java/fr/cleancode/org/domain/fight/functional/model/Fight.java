@@ -12,7 +12,6 @@ import java.util.UUID;
 @Data
 public class Fight {
 
-    @With
     @Default
     UUID fightId = UUID.randomUUID();
 

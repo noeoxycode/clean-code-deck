@@ -30,7 +30,7 @@ public interface FightEntityMapper {
 
     static List<Fight> toDomainList(List<FightEntity> entityList) {
         return entityList.stream()
-                .map(entity -> toDomain(entity))
+                .map(FightEntityMapper::toDomain)
                 .collect(Collectors.toList());
     }
 }

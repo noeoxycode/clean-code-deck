@@ -15,7 +15,7 @@ import java.util.UUID;
 
 import static fr.cleancode.org.domain.pack.functional.service.generator.PackGenerator.generatePack;
 import static fr.cleancode.org.domain.pack.functional.service.initialization.PackInitializer.initializePackPropertiesByType;
-import static fr.cleancode.org.domain.pack.functional.service.pay.PayerPack.payPack;
+import static fr.cleancode.org.domain.money.payPackValidator.PayerPack.payPack;
 
 @Slf4j
 @RequiredArgsConstructor

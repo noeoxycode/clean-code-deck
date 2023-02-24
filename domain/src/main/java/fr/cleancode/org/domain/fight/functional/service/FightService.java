@@ -24,7 +24,9 @@ public class FightService implements FightApi {
 
     private final FightCreatorSpi fightCreatorSpi;
 
-    private final FightUtilsService fightUtilsService;
+    private final FightActionsService fightUtilsService;
+
+    private final UpdateAfterFightService updateAfterFightService;
 
 
     public Fight fight(Fight fight, UUID playerId) {
@@ -39,7 +41,7 @@ public class FightService implements FightApi {
         if(!FightValidator.validate(player, fight, attacker, defender)){
             throw new FightException("Fight not valid");
         }
-        fightUtilsService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
+        updateAfterFightService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
         fightCreatorSpi.save(fight);
         return fight;
     }
