@@ -27,7 +27,7 @@ public interface FightUtils {
         defender.setHealthPoints(defender.getHealthPoints() - (attacker.getPower() - defender.getArmor()));
     }
 
-    default void updateHeroStatisticsAfterWin(Hero hero) {
+    default Hero updateHeroStatisticsAfterWin(Hero hero) {
         if (hero.getCurrentExperiences() >= 4) {
             hero.setCurrentExperiences(0);
             hero.setLevel(hero.getLevel() + 1);
@@ -37,6 +37,7 @@ public interface FightUtils {
         } else {
             hero.setCurrentExperiences(hero.getCurrentExperiences() + 1);
         }
+        return hero;
     }
 
     default void updateHeroInDeck(Player player, Hero updatedHero) {

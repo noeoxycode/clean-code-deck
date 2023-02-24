@@ -72,7 +72,7 @@ public class DomainConfiguration {
                                  FightFinderSpi fightFinderSpi,
                                  HeroFinderSpi heroFinderSpi) {
         HeroFinderService heroFinderService = new HeroFinderService(heroFinderSpi, playerFinderApi);
-        FightActionsService fightUtilsService = new FightActionsService(playerCreatorSpi, fightFinderSpi);
+        FightActionsService fightUtilsService = new FightActionsService();
         EarningTokenService earningTokenService = new EarningTokenService(fightFinderSpi);
         UpdateAfterFightService updateAfterFightService = new UpdateAfterFightService(playerCreatorSpi, earningTokenService);
         return new FightService(heroFinderService, playerFinderApi, fightCreatorSpi, fightUtilsService, updateAfterFightService);

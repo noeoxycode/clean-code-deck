@@ -24,7 +24,7 @@ public class UpdateAfterFightService implements FightUtils {
 
     public void updatePlayerAndHeroAfterFightWon(Player player, Fight fight, Hero attacker, UUID winner) {
         if (winner.equals(attacker.getHeroId())) {
-            updateHeroStatisticsAfterWin(attacker);
+            attacker = updateHeroStatisticsAfterWin(attacker);
             updateHeroInDeck(player, attacker);
             ArrayList<UUID> newHistoFights = new ArrayList<>();
             if (player.getFights() != null) {

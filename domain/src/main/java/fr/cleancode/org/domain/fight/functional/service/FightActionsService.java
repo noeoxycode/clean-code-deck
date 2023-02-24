@@ -17,10 +17,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FightActionsService implements FightUtils {
 
-    private final PlayerCreatorSpi playerCreatorSpi;
-
-    private final FightFinderSpi fightFinderSpi;
-
     public UUID fight(Hero attacker, Hero defender) {
         attacker.setPower(attacker.getPower() + calculateMatchupBuff(attacker, defender));
         defender.setPower(defender.getPower() + calculateMatchupBuff(defender, attacker));
