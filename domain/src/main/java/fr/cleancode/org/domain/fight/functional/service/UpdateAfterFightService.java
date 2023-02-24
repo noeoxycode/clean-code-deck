@@ -35,7 +35,7 @@ public class UpdateAfterFightService implements FightUtils {
                 newHistoFights.add(fight.getFightId());
                 player.setFights(newHistoFights);
             }
-            earningTokenService.earningToken(player);
+            player = earningTokenService.earningToken(player);
         }
         playerCreatorSpi.save(player);
     }

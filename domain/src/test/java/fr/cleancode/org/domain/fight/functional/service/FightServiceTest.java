@@ -2,17 +2,20 @@ package fr.cleancode.org.domain.fight.functional.service;
 
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
 import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
+import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -41,7 +44,24 @@ class FightServiceTest {
     @Mock
     UpdateAfterFightService updateAfterFightService;
 
+    @Mock
+    FightService fightService;
 
+
+    @Test
+    public void test_fight_happened() {
+        Hero attacker = Hero.builder().heroId(UUID.randomUUID()).level(5).power(100000).name("Attacker").build();
+        Hero defender = Hero.builder().heroId(UUID.randomUUID()).level(5).power(0).name("Defender").build();
+        ArrayList<Hero> heroes = new ArrayList<>();
+        heroes.add(attacker);
+        Player player = Player.builder().deck(heroes).build();
+        Fight fight = Fight.builder().attacker(attacker.getHeroId()).defender(defender.getHeroId())
+                .winner(attacker.getHeroId()).build();
+
+        Fight returnedFight = fightService.fight(fight, player.getPlayerId());
+
+        assertNotNull(returnedFight);
+    }
 
     @Test
     void testFight_PlayerNotFound() {

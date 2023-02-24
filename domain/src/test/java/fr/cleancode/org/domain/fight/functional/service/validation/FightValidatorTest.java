@@ -14,7 +14,7 @@ import java.util.UUID;
 public class FightValidatorTest {
 
     @Test
-    public void testValidate_withValidFight_returnsTrue() {
+    public void test_validate_with_valid_fight_returns_true() {
         Hero attacker = Hero.builder().heroId(UUID.randomUUID()).level(5).name("Attacker").build();
         Hero defender = Hero.builder().heroId(UUID.randomUUID()).level(5).name("Defender").build();
         ArrayList<Hero> heroes = new ArrayList<>();

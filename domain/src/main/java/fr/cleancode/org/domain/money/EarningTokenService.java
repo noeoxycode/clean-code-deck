@@ -17,7 +17,7 @@ public class EarningTokenService {
 
     private final FightFinderSpi fightFinderSpi;
 
-    public void earningToken(Player player) {
+    public Player earningToken(Player player) {
         List<Fight> fightHistory = fightFinderSpi.findAllFights();
         List<UUID> playersHeroesId = new ArrayList<>();
         for (Hero hero : player.getDeck()) {
@@ -29,6 +29,7 @@ public class EarningTokenService {
         if (count % 5 == 0 && count != 0) {
             player.setToken(player.getToken() + 1);
         }
+        return player;
     }
 
 }
