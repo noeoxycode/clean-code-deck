@@ -1,4 +1,4 @@
-package fr.cleancode.org.domain.pack.functional.service.validation;
+package fr.cleancode.org.domain.money.validation;
 
 import fr.cleancode.org.domain.player.functional.model.Player;
 

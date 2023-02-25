@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,5 +37,11 @@ public class PlayerDatabaseAdapter implements PlayerFinderSpi, PlayerCreatorSpi 
                         () -> new PlayerNotFoundException("Player with id : "
                                 + playerId + " was not found !"))
         );
+    }
+
+    @Override
+    public List<Player> findAllPlayers() {
+        List<PlayerEntity> players = playerRepository.findAll();
+        return PlayerEntityMapper.toDomainList(players);
     }
 }

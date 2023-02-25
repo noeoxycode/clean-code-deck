@@ -1,11 +1,18 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
+import fr.cleancode.org.domain.fight.functional.service.FightActionsService;
+import fr.cleancode.org.domain.fight.functional.service.FightService;
+import fr.cleancode.org.domain.fight.functional.service.UpdateAfterFightService;
+import fr.cleancode.org.domain.fight.port.client.FightApi;
+import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
+import fr.cleancode.org.domain.fight.port.server.FightFinderSpi;
 import fr.cleancode.org.domain.hero.functional.service.HeroCreatorService;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.hero.ports.client.HeroCreatorApi;
 import fr.cleancode.org.domain.hero.ports.client.HeroFinderApi;
 import fr.cleancode.org.domain.hero.ports.server.HeroCreatorSpi;
 import fr.cleancode.org.domain.hero.ports.server.HeroFinderSpi;
+import fr.cleancode.org.domain.money.EarningTokenService;
 import fr.cleancode.org.domain.pack.functional.service.OpenPackService;
 import fr.cleancode.org.domain.pack.functional.service.PackContentService;
 import fr.cleancode.org.domain.pack.functional.service.generator.PackContentGeneratorService;
@@ -28,8 +35,8 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public HeroFinderApi heroFinderService(HeroFinderSpi spi) {
-        return new HeroFinderService(spi);
+    public HeroFinderApi heroFinderService(HeroFinderSpi heroFinderSpi, PlayerFinderSpi playerFinderSpi) {
+        return new HeroFinderService(heroFinderSpi, playerFinderSpi);
     }
 
     @Bean
@@ -56,5 +63,18 @@ public class DomainConfiguration {
         return new OpenPackService(playerFinderSpi,
                 playerCreatorSpi,
                 packContentService);
+    }
+
+    @Bean
+    public FightApi fightService(PlayerFinderSpi playerFinderApi,
+                                 FightCreatorSpi fightCreatorSpi,
+                                 PlayerCreatorSpi playerCreatorSpi,
+                                 FightFinderSpi fightFinderSpi,
+                                 HeroFinderSpi heroFinderSpi) {
+        HeroFinderService heroFinderService = new HeroFinderService(heroFinderSpi, playerFinderApi);
+        FightActionsService fightUtilsService = new FightActionsService();
+        EarningTokenService earningTokenService = new EarningTokenService(fightFinderSpi);
+        UpdateAfterFightService updateAfterFightService = new UpdateAfterFightService(earningTokenService);
+        return new FightService(heroFinderService, playerFinderApi, playerCreatorSpi, fightCreatorSpi, fightUtilsService, updateAfterFightService);
     }
 }

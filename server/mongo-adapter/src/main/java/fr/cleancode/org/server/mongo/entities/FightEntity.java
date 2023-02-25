@@ -1,12 +1,11 @@
 package fr.cleancode.org.server.mongo.entities;
 
-import fr.cleancode.org.domain.hero.functional.model.Hero;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -15,14 +14,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Document("player")
-public class PlayerEntity {
+@Document("fight")
+public class FightEntity {
 
     @Id
     @Include
-    private UUID playerId;
-    private String pseudo;
-    private int token;
-    private ArrayList<Hero> deck;
-    private ArrayList<UUID> fights;
+    private UUID fightId;
+
+    private LocalDate date;
+
+    private UUID attacker;
+
+    private UUID defender;
+
+    private UUID winner;
+
 }

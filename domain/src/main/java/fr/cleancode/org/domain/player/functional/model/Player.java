@@ -19,4 +19,6 @@ public class Player {
     int token = 4;
     @Default
     ArrayList<Hero> deck = new ArrayList<>();
+    @Default
+    ArrayList<UUID> fights = new ArrayList<>();
 }
