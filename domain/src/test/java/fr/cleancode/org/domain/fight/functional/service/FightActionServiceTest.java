@@ -16,7 +16,7 @@ public class FightActionServiceTest {
 
         FightActionsService fightActionsService = new FightActionsService();
 
-        UUID winnerId = fightActionsService.fight(attacker, defender);
+        UUID winnerId = fightActionsService.fightAction(attacker, defender);
 
         assertEquals(winnerId, attacker.getHeroId());
     }
@@ -27,7 +27,7 @@ public class FightActionServiceTest {
 
         FightActionsService fightActionsService = new FightActionsService();
 
-        UUID winnerId = fightActionsService.fight(attacker, defender);
+        UUID winnerId = fightActionsService.fightAction(attacker, defender);
 
         assertEquals(winnerId, defender.getHeroId());
     }

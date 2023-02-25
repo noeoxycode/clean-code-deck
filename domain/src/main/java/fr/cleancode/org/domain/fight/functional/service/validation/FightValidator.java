@@ -1,10 +1,8 @@
 package fr.cleancode.org.domain.fight.functional.service.validation;
 
-import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import lombok.extern.java.Log;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

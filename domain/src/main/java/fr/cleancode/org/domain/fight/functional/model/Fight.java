@@ -3,7 +3,6 @@ package fr.cleancode.org.domain.fight.functional.model;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
-import lombok.With;
 
 import java.time.LocalDate;
 import java.util.UUID;

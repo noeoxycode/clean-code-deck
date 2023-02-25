@@ -1,7 +1,7 @@
 package fr.cleancode.org.bootstrap.config.domain;
 
-import fr.cleancode.org.domain.fight.functional.service.FightService;
 import fr.cleancode.org.domain.fight.functional.service.FightActionsService;
+import fr.cleancode.org.domain.fight.functional.service.FightService;
 import fr.cleancode.org.domain.fight.functional.service.UpdateAfterFightService;
 import fr.cleancode.org.domain.fight.port.client.FightApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;

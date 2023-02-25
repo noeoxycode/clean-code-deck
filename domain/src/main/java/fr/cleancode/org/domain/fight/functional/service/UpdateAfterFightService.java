@@ -4,7 +4,6 @@ import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.money.EarningTokenService;
 import fr.cleancode.org.domain.player.functional.model.Player;
-import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
