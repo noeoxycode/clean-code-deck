@@ -3,7 +3,7 @@ package fr.cleancode.org.domain.fight.functional.service;
 import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
-import fr.cleancode.org.domain.fight.port.client.FightApi;
+import fr.cleancode.org.domain.fight.port.client.FightCreatorApi;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FightService implements FightApi {
+public class FightService implements FightCreatorApi {
     private final HeroFinderService heroFinderService;
 
     private final PlayerFinderSpi playerFinderSpi;
@@ -32,7 +32,7 @@ public class FightService implements FightApi {
     private final UpdateAfterFightService updateAfterFightService;
 
 
-    public Fight fight(Fight fight, UUID playerId) {
+    public Fight saveFifght(Fight fight, UUID playerId) {
         Player player = playerFinderSpi.findPlayerById(playerId)
                 .orElseThrow(() -> new PlayerException("Player not found"));
         Hero attacker = heroFinderService.findHeroById(fight.getAttacker())

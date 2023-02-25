@@ -33,15 +33,4 @@ public class HeroDatabaseAdapter implements HeroCreatorSpi, HeroFinderSpi {
         return HeroEntityMapper.toDomainList(heroRepository.findAll());
     }
 
-    @Override
-    public Optional<Hero> findHeroById(UUID heroId) {
-        Optional<HeroEntity> hero = heroRepository.findById(heroId);
-        return Optional.ofNullable(hero
-                .map(HeroEntityMapper::toDomain)
-                .orElseThrow(
-                        () -> new HeroException("Hero with id : "
-                                + heroId + " was not found !"))
-        );
-    }
-
 }
