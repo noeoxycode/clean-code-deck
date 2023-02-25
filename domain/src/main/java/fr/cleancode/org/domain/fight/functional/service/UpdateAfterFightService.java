@@ -14,15 +14,9 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class UpdateAfterFightService implements FightUtils {
-
-    private final PlayerCreatorSpi playerCreatorSpi;
-
     private final EarningTokenService earningTokenService;
 
-
-
-
-    public void updatePlayerAndHeroAfterFightWon(Player player, Fight fight, Hero attacker, UUID winner) {
+    public Player updatePlayerAndHeroAfterFightWon(Player player, Fight fight, Hero attacker, UUID winner) {
         if (winner.equals(attacker.getHeroId())) {
             attacker = updateHeroStatisticsAfterWin(attacker);
             updateHeroInDeck(player, attacker);
@@ -37,7 +31,7 @@ public class UpdateAfterFightService implements FightUtils {
             }
             player = earningTokenService.earningToken(player);
         }
-        playerCreatorSpi.save(player);
+        return player;
     }
 
 

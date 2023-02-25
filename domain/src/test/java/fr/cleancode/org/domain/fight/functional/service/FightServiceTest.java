@@ -8,14 +8,13 @@ import java.util.UUID;
 
 import fr.cleancode.org.domain.fight.functional.exception.FightException;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
-import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
 import fr.cleancode.org.domain.fight.port.server.FightCreatorSpi;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
+import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -31,6 +30,9 @@ class FightServiceTest {
 
     @Mock
     PlayerFinderSpi playerFinderSpi;
+
+    @Mock
+    PlayerCreatorSpi playerCreatorSpi;
 
     @Mock
     FightCreatorSpi fightCreatorSpi;
@@ -49,7 +51,7 @@ class FightServiceTest {
 
     @Test
     void testFight_PlayerNotFound() {
-        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
+        FightService fightService = new FightService(heroFinderService, playerFinderSpi, playerCreatorSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
         Fight fight = Fight.builder().build();
         UUID playerId = UUID.randomUUID();
 
@@ -67,7 +69,7 @@ class FightServiceTest {
         UUID heroId = UUID.randomUUID();
         UUID playerId = UUID.randomUUID();
 
-        FightService fightService = new FightService(heroFinderService, playerFinderSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
+        FightService fightService = new FightService(heroFinderService, playerFinderSpi, playerCreatorSpi, fightCreatorSpi, fightActionsService, updateAfterFightService);
         Fight fight = Fight.builder()
                 .attacker(heroId)
                 .build();

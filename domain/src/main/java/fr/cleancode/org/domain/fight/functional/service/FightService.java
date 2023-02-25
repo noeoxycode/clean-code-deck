@@ -9,6 +9,7 @@ import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.service.HeroFinderService;
 import fr.cleancode.org.domain.player.functional.exception.PlayerException;
 import fr.cleancode.org.domain.player.functional.model.Player;
+import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ public class FightService implements FightApi {
     private final HeroFinderService heroFinderService;
 
     private final PlayerFinderSpi playerFinderSpi;
+
+    private final PlayerCreatorSpi playerCreatorSpi;
 
     private final FightCreatorSpi fightCreatorSpi;
 
@@ -41,7 +44,9 @@ public class FightService implements FightApi {
         if(!FightValidator.validate(player, fight, attacker, defender)){
             throw new FightException("Fight not valid");
         }
-        updateAfterFightService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
+        player = updateAfterFightService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
+
+        playerCreatorSpi.save(player);
         fightCreatorSpi.save(fight);
         return fight;
     }
