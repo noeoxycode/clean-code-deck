@@ -30,7 +30,7 @@ public interface FightValidator {
             return fairMatchupChecker(attacker, defender);
         }
         else {
-            logger.log(Level.INFO,"Fight not allowed : owner issue");
+            logger.log(Level.SEVERE,"Fight not allowed : owner issue");
             return false;
         }
     }
@@ -55,11 +55,11 @@ public interface FightValidator {
             }
         }
         if (!playerAttacksWithHisMonster) {
-            logger.log(Level.INFO,"Fight not allowed : impossible to attack with a hero that you do not own");
+            logger.log(Level.SEVERE,"Fight not allowed : impossible to attack with a hero that you do not own");
             return false;
         }
         if (!playerAttackerHisOwnMonster) {
-            logger.log(Level.INFO,"Fight not allowed : impossible to attack a hero that you own");
+            logger.log(Level.SEVERE,"Fight not allowed : impossible to attack a hero that you own");
             return false;
         }
         return true;
