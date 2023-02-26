@@ -10,5 +10,4 @@ public interface HeroFinderSpi {
 
     List<Hero> findAllHeroes();
 
-    Optional<Hero> findHeroById(UUID id);
 }

@@ -56,7 +56,7 @@ class FightServiceTest {
 
         when(playerFinderSpi.findPlayerById(playerId)).thenReturn(Optional.empty());
 
-        assertThrows(PlayerException.class, () -> fightService.fight(fight, playerId));
+        assertThrows(PlayerException.class, () -> fightService.saveFifght(fight, playerId));
         verify(heroFinderService, never()).findHeroById(any(UUID.class));
         verify(fightUtilsService, never()).fightAction(any(Hero.class), any(Hero.class));
         verify(updateAfterFightService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
@@ -78,7 +78,7 @@ class FightServiceTest {
         when(playerFinderSpi.findPlayerById(playerId)).thenReturn(Optional.of(player));
         when(heroFinderService.findHeroById(heroId)).thenReturn(Optional.empty());
 
-        FightException ex = assertThrows(FightException.class, () -> fightService.fight(fight, playerId));
+        FightException ex = assertThrows(FightException.class, () -> fightService.saveFifght(fight, playerId));
         assertEquals("Attacker not found", ex.getMessage());
 
         verify(heroFinderService, times(1)).findHeroById(heroId);
