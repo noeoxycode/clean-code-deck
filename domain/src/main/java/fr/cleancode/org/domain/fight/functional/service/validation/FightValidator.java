@@ -9,10 +9,6 @@ import java.util.logging.Logger;
 
 public interface FightValidator {
 
-    Logger logger
-            = Logger.getLogger(
-            FightValidator.class.getName());
-
     static boolean validate(Player player, Fight fight, Hero attacker, Hero defender) {
         if (fight.getFightDate() != null
                 && fight.getAttacker() != null
@@ -30,14 +26,12 @@ public interface FightValidator {
             return fairMatchupChecker(attacker, defender);
         }
         else {
-            logger.log(Level.SEVERE,"Fight not allowed : owner issue");
             return false;
         }
     }
 
     private static boolean fairMatchupChecker(Hero attacker, Hero defender) {
         if (attacker.getLevel() > defender.getLevel()) {
-            logger.log(Level.INFO,"Fight not allowed : the level differencial is too big");
             return false;
         }
         return true;
@@ -55,11 +49,9 @@ public interface FightValidator {
             }
         }
         if (!playerAttacksWithHisMonster) {
-            logger.log(Level.SEVERE,"Fight not allowed : impossible to attack with a hero that you do not own");
             return false;
         }
         if (!playerAttackerHisOwnMonster) {
-            logger.log(Level.SEVERE,"Fight not allowed : impossible to attack a hero that you own");
             return false;
         }
         return true;
