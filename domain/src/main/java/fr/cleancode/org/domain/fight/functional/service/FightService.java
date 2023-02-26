@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FightService implements FightCreatorApi {
+public class FightService implements FightCreatorApi, FightUtils {
     private final HeroFinderService heroFinderService;
 
     private final PlayerFinderSpi playerFinderSpi;
@@ -37,6 +37,16 @@ public class FightService implements FightCreatorApi {
                 .orElseThrow(() -> new PlayerException("Player not found"));
         Hero attacker = heroFinderService.findHeroById(fight.getAttacker())
                 .orElseThrow(() -> new FightException("Attacker not found"));
+        Hero attackerModel = Hero.builder()
+                .heroId(attacker.getHeroId())
+                .name(attacker.getName())
+                .healthPoints(attacker.getHealthPoints())
+                .currentExperiences(attacker.getCurrentExperiences())
+                .power(attacker.getPower()).armor(attacker.getArmor())
+                .speciality(attacker.getSpeciality())
+                .rarity(attacker.getRarity())
+                .level(attacker.getLevel())
+                .build();
         Hero defender = heroFinderService.findHeroById(fight.getDefender())
                 .orElseThrow(() -> new FightException("Defender not found"));
         UUID winner = fightUtilsService.fightAction(attacker, defender);
@@ -44,7 +54,9 @@ public class FightService implements FightCreatorApi {
         if(!FightValidator.validate(player, fight, attacker, defender)){
             throw new FightException("Fight not valid");
         }
-        player = updateAfterFightService.updatePlayerAndHeroAfterFightWon(player, fight, attacker, winner);
+        attacker = updateAfterFightService.updateHeroStatisticsAfterFight(attackerModel, fight);
+        player = updateAfterFightService.updatePlayerAfterFight(player, fight);
+        updateHeroInDeck(player, attacker);
 
         playerCreatorSpi.save(player);
         fightCreatorSpi.save(fight);

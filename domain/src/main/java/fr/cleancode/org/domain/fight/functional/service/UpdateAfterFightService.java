@@ -15,10 +15,8 @@ import java.util.UUID;
 public class UpdateAfterFightService implements FightUtils {
     private final EarningTokenService earningTokenService;
 
-    public Player updatePlayerAndHeroAfterFightWon(Player player, Fight fight, Hero attacker, UUID winner) {
-        if (winner.equals(attacker.getHeroId())) {
-            attacker = updateHeroStatisticsAfterWin(attacker);
-            updateHeroInDeck(player, attacker);
+    public Player updatePlayerAfterFight(Player player, Fight fight) {
+        if (fight.getWinner().equals(fight.getAttacker())) {
             ArrayList<UUID> newHistoFights = new ArrayList<>();
             if (player.getFights() != null) {
                 newHistoFights = new ArrayList<>(player.getFights());
@@ -31,6 +29,24 @@ public class UpdateAfterFightService implements FightUtils {
             player = earningTokenService.earningToken(player);
         }
         return player;
+    }
+
+    public Hero updateHeroStatisticsAfterFight(Hero hero, Fight fight) {
+        if(fight.getAttacker().equals(hero.getHeroId())){
+            if(fight.getAttacker().equals(hero.getHeroId())){
+                if (hero.getCurrentExperiences() >= 4) {
+                    hero.setCurrentExperiences(0);
+                    hero.setLevel(hero.getLevel() + 1);
+                    hero.setHealthPoints((int) Math.round(hero.getHealthPoints() * 1.1));
+                    hero.setPower((int) Math.round(hero.getPower() * 1.1));
+                    hero.setArmor((int) Math.round(hero.getArmor() * 1.1));
+                } else {
+                    hero.setCurrentExperiences(hero.getCurrentExperiences() + 1);
+                }
+            }
+        }
+
+        return hero;
     }
 
 

@@ -11,6 +11,7 @@ import fr.cleancode.org.domain.player.ports.server.PlayerCreatorSpi;
 import fr.cleancode.org.domain.player.ports.server.PlayerFinderSpi;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -43,10 +44,10 @@ class FightServiceTest {
     FightActionsService fightActionsService;
 
     @Mock
-    UpdateAfterFightService updateAfterFightService;
+    UpdateAfterFightService updateAfterFightServiceMock;
 
-    @Mock
-    FightService fightService;
+    @InjectMocks
+    UpdateAfterFightService updateAfterFightService;
 
     @Test
     void testFight_PlayerNotFound() {
@@ -59,7 +60,7 @@ class FightServiceTest {
         assertThrows(PlayerException.class, () -> fightService.saveFifght(fight, playerId));
         verify(heroFinderService, never()).findHeroById(any(UUID.class));
         verify(fightUtilsService, never()).fightAction(any(Hero.class), any(Hero.class));
-        verify(updateAfterFightService, never()).updatePlayerAndHeroAfterFightWon(any(Player.class), any(Fight.class), any(Hero.class), any(UUID.class));
+        verify(updateAfterFightServiceMock, never()).updatePlayerAfterFight(any(Player.class), any(Fight.class));
         verify(fightCreatorSpi, never()).save(any(Fight.class));
     }
 
@@ -83,12 +84,35 @@ class FightServiceTest {
 
         verify(heroFinderService, times(1)).findHeroById(heroId);
         verify(fightUtilsService, never()).fightAction(any(Hero.class), any(Hero.class));
-        verify(updateAfterFightService, never())
-                .updatePlayerAndHeroAfterFightWon(
+        verify(updateAfterFightServiceMock, never())
+                .updatePlayerAfterFight(
                         any(Player.class),
-                        any(Fight.class),
-                        any(Hero.class),
-                        any(UUID.class));
+                        any(Fight.class));
         verify(fightCreatorSpi, never()).save(any(Fight.class));
     }
+
+    @Test
+    public void test_update_hero_statistics_after_win_should_increase_hero_stats() {
+        Hero hero = Hero.builder().name("pigeon").level(1).power(10).armor(5).healthPoints(100).currentExperiences(3).build();
+        Fight fight = Fight.builder().attacker(hero.getHeroId()).winner(hero.getHeroId()).build();
+        hero = updateAfterFightService.updateHeroStatisticsAfterFight(hero, fight);
+        assertEquals(4, hero.getCurrentExperiences());
+        assertEquals(1, hero.getLevel());
+        assertEquals(100, hero.getHealthPoints());
+        assertEquals(10, hero.getPower());
+        assertEquals(5, hero.getArmor());
+    }
+
+    @Test
+    public void test_update_hero_statistics_after_win_should_level_up() {
+        Hero hero = Hero.builder().heroId(UUID.randomUUID()).level(1).power(10).armor(5).healthPoints(100).currentExperiences(4).build();
+        Fight fight = Fight.builder().winner(hero.getHeroId()).attacker(hero.getHeroId()).build();
+        hero = updateAfterFightService.updateHeroStatisticsAfterFight(hero, fight);
+        assertEquals(0, hero.getCurrentExperiences());
+        assertEquals(2, hero.getLevel());
+        assertEquals(110, hero.getHealthPoints());
+        assertEquals(11, hero.getPower());
+        assertEquals(6, hero.getArmor());
+    }
+
 }

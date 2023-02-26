@@ -2,8 +2,10 @@ package fr.cleancode.org.domain.fight.functional.service;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
+import fr.cleancode.org.domain.money.EarningTokenService;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -69,28 +71,6 @@ public class FightUtilsTest {
         fightUtils.attack(attacker, defender);
 
         assertEquals(45, defender.getHealthPoints());
-    }
-
-    @Test
-    public void test_update_hero_statistics_after_win_should_increase_hero_stats() {
-        Hero hero = Hero.builder().heroId(UUID.randomUUID()).level(1).power(10).armor(5).healthPoints(100).currentExperiences(3).build();
-        hero = fightUtils.updateHeroStatisticsAfterWin(hero);
-        assertEquals(4, hero.getCurrentExperiences());
-        assertEquals(1, hero.getLevel());
-        assertEquals(100, hero.getHealthPoints());
-        assertEquals(10, hero.getPower());
-        assertEquals(5, hero.getArmor());
-    }
-
-    @Test
-    public void test_update_hero_statistics_after_win_should_level_up() {
-        Hero hero = Hero.builder().heroId(UUID.randomUUID()).level(1).power(10).armor(5).healthPoints(100).currentExperiences(4).build();
-        hero = fightUtils.updateHeroStatisticsAfterWin(hero);
-        assertEquals(0, hero.getCurrentExperiences());
-        assertEquals(2, hero.getLevel());
-        assertEquals(110, hero.getHealthPoints());
-        assertEquals(11, hero.getPower());
-        assertEquals(6, hero.getArmor());
     }
 
     @Test
