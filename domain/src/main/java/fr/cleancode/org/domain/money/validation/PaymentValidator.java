@@ -19,6 +19,7 @@ public interface PaymentValidator {
         }
         if(player == null){
             logger.log(Level.SEVERE,"Player is null");
+            return false;
         }
         return player.getToken() >= price;
     }
