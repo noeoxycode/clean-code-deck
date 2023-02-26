@@ -16,24 +16,22 @@ public class UpdateAfterFightService implements FightUtils {
     private final EarningTokenService earningTokenService;
 
     public Player updatePlayerAfterFight(Player player, Fight fight) {
-        if (fight.getWinner().equals(fight.getAttacker())) {
-            ArrayList<UUID> newHistoFights = new ArrayList<>();
-            if (player.getFights() != null) {
-                newHistoFights = new ArrayList<>(player.getFights());
-                newHistoFights.add(fight.getFightId());
-                player.setFights(newHistoFights);
-            } else {
-                newHistoFights.add(fight.getFightId());
-                player.setFights(newHistoFights);
-            }
-            player = earningTokenService.earningToken(player);
+        ArrayList<UUID> newHistoFights = new ArrayList<>();
+        if (player.getFights() != null) {
+            newHistoFights = player.getFights();
+            newHistoFights.add(fight.getFightId());
+            player.setFights(newHistoFights);
+        } else {
+            newHistoFights.add(fight.getFightId());
+            player.setFights(newHistoFights);
         }
+        player = earningTokenService.earningToken(player);
         return player;
     }
 
     public Hero updateHeroStatisticsAfterFight(Hero hero, Fight fight) {
         if(fight.getAttacker().equals(hero.getHeroId())){
-            if(fight.getAttacker().equals(hero.getHeroId())){
+            if(fight.getAttacker().equals(fight.getWinner())){
                 if (hero.getCurrentExperiences() >= 4) {
                     hero.setCurrentExperiences(0);
                     hero.setLevel(hero.getLevel() + 1);
