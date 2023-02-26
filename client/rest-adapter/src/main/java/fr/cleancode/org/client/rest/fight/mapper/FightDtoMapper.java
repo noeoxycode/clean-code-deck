@@ -2,10 +2,7 @@ package fr.cleancode.org.client.rest.fight.mapper;
 
 import fr.cleancode.org.client.rest.fight.dto.FightCreationRequest;
 import fr.cleancode.org.client.rest.fight.dto.FightDto;
-import fr.cleancode.org.client.rest.hero.dto.HeroDto;
-import fr.cleancode.org.client.rest.hero.mapper.HeroDtoMapper;
 import fr.cleancode.org.domain.fight.functional.model.Fight;
-import fr.cleancode.org.domain.hero.functional.model.Hero;
 
 import java.util.List;
 import java.util.stream.Collectors;

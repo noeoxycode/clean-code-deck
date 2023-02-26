@@ -1,12 +1,8 @@
 package fr.cleancode.org.server.mongo.adapter;
 
 import fr.cleancode.org.domain.fight.functional.model.Fight;
-import fr.cleancode.org.domain.hero.functional.model.Hero;
-import fr.cleancode.org.domain.hero.functional.model.Speciality;
 import fr.cleancode.org.server.mongo.entities.FightEntity;
-import fr.cleancode.org.server.mongo.entities.HeroEntity;
 import fr.cleancode.org.server.mongo.mapper.FightEntityMapper;
-import fr.cleancode.org.server.mongo.mapper.HeroEntityMapper;
 import fr.cleancode.org.server.mongo.repository.FightRepository;
 import lombok.val;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.UUID;
 
-import static fr.cleancode.org.domain.hero.functional.model.Rarity.LEGENDARY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,11 +1,6 @@
 package fr.cleancode.org.domain.money.payPackValidator;
 
-import fr.cleancode.org.domain.fight.functional.service.validation.FightValidator;
-import fr.cleancode.org.domain.pack.functional.exception.PaymentException;
 import fr.cleancode.org.domain.player.functional.model.Player;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static fr.cleancode.org.domain.money.validation.PaymentValidator.validate;
 

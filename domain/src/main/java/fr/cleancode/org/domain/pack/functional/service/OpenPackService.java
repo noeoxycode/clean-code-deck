@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import static fr.cleancode.org.domain.money.payPackValidator.PayPack.payPack;
 import static fr.cleancode.org.domain.pack.functional.service.generator.PackGenerator.generatePack;

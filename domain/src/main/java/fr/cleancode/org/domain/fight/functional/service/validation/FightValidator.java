@@ -4,9 +4,6 @@ import fr.cleancode.org.domain.fight.functional.model.Fight;
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.player.functional.model.Player;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public interface FightValidator {
 
     static boolean validate(Player player, Fight fight, Hero attacker, Hero defender) {
