@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +40,9 @@ class HeroDatabaseAdapterTest {
 
         @Captor
         private ArgumentCaptor<HeroEntity> entityArgumentCaptor;
+
+        @Captor
+        private ArgumentCaptor<List<HeroEntity>> listEntityArgumentCaptor;
 
         @Test
         void should_create_hero() {
@@ -83,6 +87,54 @@ class HeroDatabaseAdapterTest {
             assertThat(entityArgumentCaptor.getValue())
                     .usingRecursiveComparison()
                     .isEqualTo(entity);
+        }
+
+
+        @Test
+        void should_create_heroes() {
+            val hero1 = Hero.builder().build();
+            val entity1 = HeroEntityMapper.fromDomain(hero1);
+
+            val hero2 = Hero.builder().build();
+            val entity2 = HeroEntityMapper.fromDomain(hero2);
+
+            val heroes = Arrays.asList(hero1, hero2);
+            val entities = Arrays.asList(entity1, entity2);
+
+            when(heroRepository.saveAll(anyList())).thenReturn(entities);
+
+            val actual = heroDatabaseAdapter.saveAll(heroes);
+
+            verify(heroRepository).saveAll(listEntityArgumentCaptor.capture());
+            verifyNoMoreInteractions(heroRepository);
+
+            assertThat(actual).isInstanceOf(List.class);
+            assertThat(actual).usingRecursiveComparison().isEqualTo(heroes);
+            assertThat(listEntityArgumentCaptor.getValue()).usingRecursiveComparison().isEqualTo(entities);
+        }
+
+        @Test
+        void should_not_create_heroes() {
+            val hero1 = Hero.builder().build();
+            val entity1 = HeroEntityMapper.fromDomain(hero1);
+
+            val hero2 = Hero.builder().build();
+            val entity2 = HeroEntityMapper.fromDomain(hero2);
+
+            val heroes = Arrays.asList(hero1, hero2);
+            val entities = Arrays.asList(entity1, entity2);
+
+            val throwable = new IllegalArgumentException();
+
+            when(heroRepository.saveAll(entities)).thenThrow(throwable);
+
+            assertThatExceptionOfType(IllegalArgumentException.class)
+                    .isThrownBy(() -> heroDatabaseAdapter.saveAll(heroes));
+
+            verify(heroRepository).saveAll(listEntityArgumentCaptor.capture());
+            verifyNoMoreInteractions(heroRepository);
+
+            assertThat(listEntityArgumentCaptor.getValue()).usingRecursiveComparison().isEqualTo(entities);
         }
 
     }
