@@ -42,7 +42,7 @@ class OpenPackServiceTest {
     @Test
     void should_open_pack() {
         val id = UUID.randomUUID();
-        val player = Player.builder().playerId(id).build();
+        val player = Player.builder().playerId(id).token(100).build();
         val packType = PackType.DIAMOND;
         val heroes = List.of(
                 Hero.builder().build(),

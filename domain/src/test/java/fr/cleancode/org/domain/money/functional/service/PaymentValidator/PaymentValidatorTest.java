@@ -1,4 +1,4 @@
-package fr.cleancode.org.domain.pack.functional.service.PaymentValidator;
+package fr.cleancode.org.domain.money.functional.service.PaymentValidator;
 
 import fr.cleancode.org.domain.money.validation.PaymentValidator;
 import fr.cleancode.org.domain.player.functional.model.Player;
