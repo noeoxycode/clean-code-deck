@@ -23,7 +23,7 @@ public class FightFinderServiceTest {
 
     @Test
     void test_find_fights_fistory_returns_empty_optional_when_hero_has_no_fights() {
-        FightFinderService fightFinderService = new FightFinderService(fightFinderSpi);
+        FightHistoryFinderService fightFinderService = new FightHistoryFinderService(fightFinderSpi);
         UUID heroId = UUID.randomUUID();
         when(fightFinderSpi.findHeroFightsHistory(heroId)).thenReturn(Optional.of(new ArrayList<>()));
 
@@ -34,7 +34,7 @@ public class FightFinderServiceTest {
 
     @Test
     void test_find_fights_history_returns_hero_fight_history_when_hero_has_fights() {
-        FightFinderService fightFinderService = new FightFinderService(fightFinderSpi);
+        FightHistoryFinderService fightFinderService = new FightHistoryFinderService(fightFinderSpi);
         UUID heroId = UUID.randomUUID();
         List<Fight> fights = new ArrayList<>();
         fights.add(Fight.builder().build());
@@ -48,7 +48,7 @@ public class FightFinderServiceTest {
 
     @Test
     void test_find_fights_history_throws_exception_when_spi_returns_null() {
-        FightFinderService fightFinderService = new FightFinderService(fightFinderSpi);
+        FightHistoryFinderService fightFinderService = new FightHistoryFinderService(fightFinderSpi);
         UUID heroId = UUID.randomUUID();
         when(fightFinderSpi.findHeroFightsHistory(heroId)).thenReturn(null);
 
