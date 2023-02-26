@@ -32,9 +32,6 @@ public class OpenPackService implements OpenPackApi {
         Player player = playerFinderSpi
                 .findPlayerById(playerId)
                 .get();
-        if(player == null){
-            throw new IllegalArgumentException("Bad player id");
-        }
         Pack pack = generatePack(packType);
         initializePackPropertiesByType(pack);
         int cost = pack.getCost();
