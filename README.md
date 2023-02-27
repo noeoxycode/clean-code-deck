@@ -42,7 +42,12 @@ docker-compose up -d
 ```
 
 > This command will bring the database up on a local environment.
-**After that you can run the *Spring Application* on IntelliJ ! 🚀**
+
+> After that you can run the *Spring Application* on IntelliJ or with this command `mvn spring-boot:run`! 🚀
+
+#### Check Api
+
+> Hit this url on a Web browser to see the API endpoint : http://localhost:8080/swagger-ui/ 🙌🏻
 
 #### After (Stop)
 

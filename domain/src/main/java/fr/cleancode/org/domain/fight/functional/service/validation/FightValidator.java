@@ -12,17 +12,15 @@ public interface FightValidator {
                 && fight.getDefender() != null
                 && fight.getWinner() != null) {
             return (fightParametersChecker(player, fight, attacker, defender));
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     private static boolean fightParametersChecker(Player player, Fight fight, Hero attacker, Hero defender) {
-        if(heroesOwnerValidChecker(player, fight)){
+        if (heroesOwnerValidChecker(player, fight)) {
             return fairMatchupChecker(attacker, defender);
-        }
-        else {
+        } else {
             return false;
         }
     }

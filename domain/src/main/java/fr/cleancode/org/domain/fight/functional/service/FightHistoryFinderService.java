@@ -19,10 +19,9 @@ public class FightHistoryFinderService implements FightFinderApi, FightHistoryVa
 
     public Optional<List<Fight>> findFightsHistory(UUID heroId) {
         Optional<List<Fight>> heroFightHistory = spi.findHeroFightsHistory(heroId);
-        if (!validate(heroFightHistory.get())){
+        if (!validate(heroFightHistory.get())) {
             return Optional.empty();
-        }
-        else return heroFightHistory;
+        } else return heroFightHistory;
     }
 
 }

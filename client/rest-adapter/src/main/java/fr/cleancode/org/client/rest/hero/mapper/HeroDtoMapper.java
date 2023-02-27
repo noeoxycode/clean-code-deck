@@ -34,7 +34,7 @@ public interface HeroDtoMapper {
 
     static List<Hero> heroListCreationToDomain(List<HeroCreationRequest> dtoList) {
         ArrayList<Hero> heroes = new ArrayList<>();
-        for(HeroCreationRequest dto : dtoList){
+        for (HeroCreationRequest dto : dtoList) {
             Hero hero = Hero.builder()
                     .name(dto.name())
                     .speciality(dto.speciality())

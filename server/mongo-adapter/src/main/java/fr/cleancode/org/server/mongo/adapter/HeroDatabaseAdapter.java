@@ -29,7 +29,7 @@ public class HeroDatabaseAdapter implements HeroCreatorSpi, HeroFinderSpi {
     @Override
     public List<Hero> saveAll(List<Hero> heroes) {
         ArrayList<HeroEntity> heroesToSave = new ArrayList<>();
-        for(Hero hero : heroes){
+        for (Hero hero : heroes) {
             val entity = HeroEntityMapper.fromDomain(hero);
             heroesToSave.add(entity);
         }

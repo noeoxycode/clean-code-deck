@@ -54,8 +54,6 @@ public class FightValidatorTest {
     }
 
 
-
-
     @Test
     public void test_validate_with_unfair_matchup_returns_false() {
         Hero attacker = Hero.builder().heroId(UUID.randomUUID()).level(1).name("Attacker").build();

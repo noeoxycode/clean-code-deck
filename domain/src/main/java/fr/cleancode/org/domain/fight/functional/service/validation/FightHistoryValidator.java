@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FightHistoryValidator {
 
-    default boolean validate(List<Fight> fightHistory){
+    default boolean validate(List<Fight> fightHistory) {
         return fightHistory.size() > 0;
     }
 

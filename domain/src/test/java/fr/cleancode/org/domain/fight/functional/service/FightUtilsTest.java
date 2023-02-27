@@ -2,10 +2,8 @@ package fr.cleancode.org.domain.fight.functional.service;
 
 import fr.cleancode.org.domain.hero.functional.model.Hero;
 import fr.cleancode.org.domain.hero.functional.model.Speciality;
-import fr.cleancode.org.domain.money.EarningTokenService;
 import fr.cleancode.org.domain.player.functional.model.Player;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.UUID;

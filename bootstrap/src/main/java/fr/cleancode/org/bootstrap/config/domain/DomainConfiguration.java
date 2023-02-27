@@ -81,7 +81,7 @@ public class DomainConfiguration {
     }
 
     @Bean
-    public FightFinderApi fightFinderApiService(FightFinderSpi fightFinderSpi){
+    public FightFinderApi fightFinderApiService(FightFinderSpi fightFinderSpi) {
         return new FightHistoryFinderService(fightFinderSpi);
     }
 }

@@ -30,8 +30,8 @@ public class UpdateAfterFightService implements FightUtils {
     }
 
     public Hero updateHeroStatisticsAfterFight(Hero hero, Fight fight) {
-        if(fight.getAttacker().equals(hero.getHeroId())){
-            if(fight.getAttacker().equals(fight.getWinner())){
+        if (fight.getAttacker().equals(hero.getHeroId())) {
+            if (fight.getAttacker().equals(fight.getWinner())) {
                 if (hero.getCurrentExperiences() >= 4) {
                     hero.setCurrentExperiences(0);
                     hero.setLevel(hero.getLevel() + 1);

@@ -36,7 +36,7 @@ public class OpenPackService implements OpenPackApi {
         initializePackPropertiesByType(pack);
         int cost = pack.getCost();
 
-        if(!payPack(player, cost)){
+        if (!payPack(player, cost)) {
             throw new PaymentException("Invalid payment transaction");
         }
         List<Hero> heroes = packContentService

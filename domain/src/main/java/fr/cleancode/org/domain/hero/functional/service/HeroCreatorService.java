@@ -33,10 +33,10 @@ public class HeroCreatorService implements HeroCreatorApi {
     @Override
     public List<Hero> saveAll(List<Hero> heroes) {
         ArrayList<Hero> heroesList = new ArrayList<>();
-        if(!HeroValidator.validateList(heroes)){
+        if (!HeroValidator.validateList(heroes)) {
             throw new HeroException("Hero list is null");
         }
-        for(Hero hero : heroes){
+        for (Hero hero : heroes) {
             initializeHeroPropertiesBySpeciality(hero);
             initializeHeroPropertiesByRarity(hero);
             if (!HeroValidator.validate(hero)) {

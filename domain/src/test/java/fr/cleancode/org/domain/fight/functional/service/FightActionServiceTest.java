@@ -20,6 +20,7 @@ public class FightActionServiceTest {
 
         assertEquals(winnerId, attacker.getHeroId());
     }
+
     @Test
     public void test_fight_defender_wins() {
         Hero attacker = Hero.builder().power(0).healthPoints(1).armor(5).build();

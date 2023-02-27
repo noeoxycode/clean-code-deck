@@ -14,10 +14,10 @@ public interface HeroValidator {
                 && hero.getLevel() < 100;
     }
 
-    static boolean validateList(List<Hero> heroes){
-        if(heroes == null){
+    static boolean validateList(List<Hero> heroes) {
+        if (heroes == null) {
             return false;
         }
-        return heroes.size()>0;
+        return heroes.size() > 0;
     }
 }
